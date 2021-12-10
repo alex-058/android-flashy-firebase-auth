@@ -39,7 +39,7 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/flashcardFrontQuestion"
+                    android:id="@+id/flashcardFront"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="12dp"
@@ -49,7 +49,7 @@
                     android:hint="@string/hint_frontFlashcardContent" />
 
                 <EditText
-                    android:id="@+id/flashcardBackQuestion"
+                    android:id="@+id/flashcardBack"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="12dp"
@@ -59,7 +59,7 @@
                     android:hint="@string/hint_backFlashcardContent" />
 
                 <Button
-                    android:id="@+id/btnAdd"
+                    android:id="@+id/btnSave"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
