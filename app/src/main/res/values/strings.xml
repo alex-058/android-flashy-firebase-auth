@@ -3,4 +3,5 @@
     <string name="hint_frontFlashcardContent">What is your question?</string>
     <string name="hint_backFlashcardContent">And your answer here</string>
     <string name="btn_saveFlashcard">Save</string>
+    <string name="menu_addFlashcard">Add</string>
 </resources>

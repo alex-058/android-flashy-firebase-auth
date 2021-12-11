@@ -43,7 +43,6 @@ class FlashcardActivity : AppCompatActivity() {
                 binding.flashcardFront.text.clear()
                 binding.flashcardBack.text.clear()
                 binding.flashcardFront.requestFocus()
-
             }
 
             else {
