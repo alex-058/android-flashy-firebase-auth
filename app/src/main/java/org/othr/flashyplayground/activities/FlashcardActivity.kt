@@ -1,9 +1,11 @@
 package org.othr.flashyplayground.activities
 
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import org.othr.flashyplayground.databinding.ActivityFlashcardAddBinding
 import org.othr.flashyplayground.model.FlashcardModel
 import com.google.android.material.snackbar.Snackbar
@@ -13,6 +15,7 @@ import org.othr.flashyplayground.R
 class FlashcardActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFlashcardAddBinding
+
     // Declaration of MainApp
     lateinit var app :  MainApp
 
@@ -63,6 +66,17 @@ class FlashcardActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_flashcard_add, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.cancel_item -> {
+                // Launch Flashcard List Activity
+                val launcherIntent = Intent(this, FlashcardListActivity::class.java)
+                startActivityForResult(launcherIntent, 0)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }
