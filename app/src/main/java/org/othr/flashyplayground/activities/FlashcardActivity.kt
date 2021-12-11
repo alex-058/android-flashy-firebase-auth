@@ -1,12 +1,14 @@
 package org.othr.flashyplayground.activities
 
-import android.app.Application
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import org.othr.flashyplayground.databinding.ActivityFlashcardAddBinding
 import org.othr.flashyplayground.model.FlashcardModel
 import com.google.android.material.snackbar.Snackbar
 import org.othr.flashyplayground.main.MainApp
+import org.othr.flashyplayground.R
 
 class FlashcardActivity : AppCompatActivity() {
 
@@ -23,6 +25,9 @@ class FlashcardActivity : AppCompatActivity() {
 
         // Initalization of Main App
         app = application as MainApp
+        // Toolbar support
+        binding.toolbarAdd.title = title
+        setSupportActionBar(binding.toolbarAdd)
 
         var aFlashcard = FlashcardModel()
 
@@ -53,8 +58,11 @@ class FlashcardActivity : AppCompatActivity() {
 
         }
 
-
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_flashcard_add, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
 
 }

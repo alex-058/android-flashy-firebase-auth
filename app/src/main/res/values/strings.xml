@@ -4,4 +4,6 @@
     <string name="hint_backFlashcardContent">And your answer here</string>
     <string name="btn_saveFlashcard">Save</string>
     <string name="menu_addFlashcard">Add</string>
+    <string name="menu_cancelButton">Cancel</string>
+>>>>>>> add-flashcard
 </resources>
