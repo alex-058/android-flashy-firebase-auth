@@ -1,20 +1,28 @@
 package org.othr.flashyplayground.activities
 
+import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import org.othr.flashyplayground.databinding.ActivityFlashcardAddBinding
 import org.othr.flashyplayground.model.FlashcardModel
 import com.google.android.material.snackbar.Snackbar
+import org.othr.flashyplayground.main.MainApp
 
 class FlashcardActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFlashcardAddBinding
-    var flashcards = ArrayList<FlashcardModel>()
+    // Declaration of MainApp
+    lateinit var app :  MainApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+        // Binding Support
         binding = ActivityFlashcardAddBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Initalization of Main App
+        app = application as MainApp
 
         var aFlashcard = FlashcardModel()
 
@@ -29,7 +37,7 @@ class FlashcardActivity : AppCompatActivity() {
                     .show()
 
                 // Add Flashcard to list
-                flashcards.add(aFlashcard.copy())
+                app.flashcards.add(aFlashcard.copy())
 
                 // Request focus operations
                 binding.flashcardFront.text.clear()
