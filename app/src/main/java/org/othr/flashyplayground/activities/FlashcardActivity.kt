@@ -45,7 +45,7 @@ class FlashcardActivity : AppCompatActivity() {
                     .show()
 
                 // Add Flashcard to list
-                app.flashcards.add(aFlashcard.copy())
+                app.flashcards.create(aFlashcard.copy())
 
                 // Request focus operations
                 binding.flashcardFront.text.clear()

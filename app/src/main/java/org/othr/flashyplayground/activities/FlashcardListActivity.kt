@@ -30,7 +30,7 @@ class FlashcardListActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerViewFlashcards.layoutManager = layoutManager
-        binding.recyclerViewFlashcards.adapter = FlashcardAdapter(app.flashcards)
+        binding.recyclerViewFlashcards.adapter = FlashcardAdapter(app.flashcards.findAll())
 
         // Setup toolbar for add functionality (Actionbar)
         binding.toolbar.title = title
