@@ -11,6 +11,7 @@ import org.othr.flashyplayground.model.FlashcardModel
 import com.google.android.material.snackbar.Snackbar
 import org.othr.flashyplayground.main.MainApp
 import org.othr.flashyplayground.R
+import timber.log.Timber
 
 class FlashcardActivity : AppCompatActivity() {
 
@@ -20,6 +21,9 @@ class FlashcardActivity : AppCompatActivity() {
     lateinit var app :  MainApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        // Initialize Timber Tree for Logging support with Timber
+        Timber.plant(Timber.DebugTree())
 
         super.onCreate(savedInstanceState)
         // Binding Support
