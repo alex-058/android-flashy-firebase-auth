@@ -5,14 +5,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import org.othr.flashyplayground.R
 import org.othr.flashyplayground.databinding.ActivityFlashcardListBinding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import org.othr.flashyplayground.adapter.FlashcardAdapter
 import org.othr.flashyplayground.main.MainApp
+import org.othr.flashyplayground.model.FlashcardModel
 
-class FlashcardListActivity : AppCompatActivity() {
+class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardListener {
 
     private lateinit var binding: ActivityFlashcardListBinding
     lateinit var app : MainApp
@@ -30,7 +33,7 @@ class FlashcardListActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerViewFlashcards.layoutManager = layoutManager
-        binding.recyclerViewFlashcards.adapter = FlashcardAdapter(app.flashcards.findAll())
+        binding.recyclerViewFlashcards.adapter = FlashcardAdapter(app.flashcards.findAll(), this)
 
         // Setup toolbar for add functionality (Actionbar)
         binding.toolbar.title = title
@@ -55,5 +58,10 @@ class FlashcardListActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    // event handling when clicking certain row / item in recycler view
+    override fun onFlashcardItemClick(flashcard: FlashcardModel) {
+        Toast.makeText(applicationContext, "You just clicked a flashcard", Toast.LENGTH_LONG).show()
     }
 }
