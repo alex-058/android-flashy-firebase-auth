@@ -16,6 +16,7 @@ import timber.log.Timber
 class FlashcardActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFlashcardAddBinding
+    var aFlashcard = FlashcardModel()
 
     // Declaration of MainApp
     lateinit var app :  MainApp
@@ -32,11 +33,24 @@ class FlashcardActivity : AppCompatActivity() {
 
         // Initalization of Main App
         app = application as MainApp
+
+        // Initialize edit flag to check on update / add state (default: false -> add mode)
+        var edit = false // is this the right position to declare this variable?
+
         // Toolbar support
         binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)
 
-        var aFlashcard = FlashcardModel()
+        if (intent.hasExtra("edit_flashcard")) {
+            // Retrieve flashcard data
+            aFlashcard = intent.extras?.getParcelable("edit_flashcard")!!
+            // Set text flashcard text fields in order to allow user to edit text of existing flashcards
+            binding.flashcardBack.setText(aFlashcard.back)
+            binding.flashcardFront.setText(aFlashcard.front)
+            // Set new toolbar title
+            binding.btnSave.setText(R.string.btn_changeFlashcard)
+            edit = true
+        }
 
         binding.btnSave.setOnClickListener {
             aFlashcard.front = binding.flashcardFront.text.toString()
@@ -44,12 +58,22 @@ class FlashcardActivity : AppCompatActivity() {
 
             if (aFlashcard.front.isNotEmpty() && aFlashcard.back.isNotEmpty()) {
 
-                Snackbar
-                    .make(it, "Flashcard was added", Snackbar.LENGTH_LONG)
-                    .show()
+                if (edit == false) {
+                    // Add new flashcard to list
+                    app.flashcards.create(aFlashcard.copy())
+                    Snackbar
+                        .make(it, R.string.message_addedFlashcard, Snackbar.LENGTH_LONG)
+                        .show()
+                }
+                else {
+                    // Update existing flashcard
+                    app.flashcards.update(aFlashcard.copy())
+                    Snackbar
+                        .make(it, R.string.message_updatedFlashcard, Snackbar.LENGTH_LONG)
+                        .show()
+                    finish()
+                }
 
-                // Add Flashcard to list
-                app.flashcards.create(aFlashcard.copy())
 
                 // Request focus operations
                 binding.flashcardFront.text.clear()
@@ -59,7 +83,7 @@ class FlashcardActivity : AppCompatActivity() {
 
             else {
                 Snackbar
-                    .make(it, "Flashcard not added", Snackbar.LENGTH_LONG)
+                    .make(it, R.string.message_discardedAddFlashcard, Snackbar.LENGTH_LONG)
                     .show()
             }
 

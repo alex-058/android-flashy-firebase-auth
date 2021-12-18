@@ -62,6 +62,17 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
 
     // event handling when clicking certain row / item in recycler view
     override fun onFlashcardItemClick(flashcard: FlashcardModel) {
-        Toast.makeText(applicationContext, "You just clicked a flashcard", Toast.LENGTH_LONG).show()
+        // Toast.makeText(applicationContext, "You just clicked a flashcard", Toast.LENGTH_LONG).show()
+        val launcherIntent = Intent(this, FlashcardActivity::class.java)
+        launcherIntent.putExtra("edit_flashcard", flashcard)
+        startActivityForResult(launcherIntent, 0)
+    }
+
+    /**
+     * Forces Flashcard list View to refresh itself
+     */
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        binding.recyclerViewFlashcards.adapter?.notifyDataSetChanged()
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }

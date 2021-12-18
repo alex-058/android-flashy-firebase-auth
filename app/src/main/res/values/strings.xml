@@ -3,7 +3,11 @@
     <string name="hint_frontFlashcardContent">What is your question?</string>
     <string name="hint_backFlashcardContent">And your answer here</string>
     <string name="btn_saveFlashcard">Save</string>
+    <string name="btn_changeFlashcard">Save Changes</string>
     <string name="menu_addFlashcard">Add</string>
     <string name="menu_cancelButton">Cancel</string>
->>>>>>> add-flashcard
+    <string name="message_addedFlashcard">Flashcard added</string>
+    <string name="message_updatedFlashcard">Flashcard updated</string>
+    <string name="message_discardedAddFlashcard">Flashcard not added. Please enter front/back content.</string>
+
 </resources>
