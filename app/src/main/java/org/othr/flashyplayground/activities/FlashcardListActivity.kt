@@ -6,11 +6,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import org.othr.flashyplayground.R
 import org.othr.flashyplayground.databinding.ActivityFlashcardListBinding
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import org.othr.flashyplayground.adapter.FlashcardAdapter
 import org.othr.flashyplayground.main.MainApp
 import org.othr.flashyplayground.model.FlashcardModel
@@ -19,6 +19,9 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
 
     private lateinit var binding: ActivityFlashcardListBinding
     lateinit var app : MainApp
+
+    // Launcher
+    private lateinit var refreshListIntentLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +42,9 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)
 
+        // Trigger callback methods
+        registerRefreshCallback()
+
     }
 
     // Get reference to actual menu buttons from menu resource
@@ -50,10 +56,17 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
     // event handling for items in toolbar
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.start_learn -> {
+                // Toast.makeText(applicationContext, "Starting Learn Activity", Toast.LENGTH_LONG).show()
+                val launcherIntent = Intent(this, FlashcardLearnFrontActivity::class.java)
+                // pass in the flashcards array list (stack) needed for learning activity
+                launcherIntent.putParcelableArrayListExtra("learn" , app.flashcards.findAll())
+                refreshListIntentLauncher.launch(launcherIntent)
+            }
             R.id.add_item -> {
                 // launch FlashcardActivity
                 val launcherIntent = Intent(this, FlashcardActivity::class.java)
-                startActivityForResult(launcherIntent, 0)
+                refreshListIntentLauncher.launch(launcherIntent)
             }
         }
 
@@ -65,14 +78,18 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
         // Toast.makeText(applicationContext, "You just clicked a flashcard", Toast.LENGTH_LONG).show()
         val launcherIntent = Intent(this, FlashcardActivity::class.java)
         launcherIntent.putExtra("edit_flashcard", flashcard)
-        startActivityForResult(launcherIntent, 0)
+        refreshListIntentLauncher.launch(launcherIntent)
     }
 
     /**
-     * Forces Flashcard list View to refresh itself
+     * Forces Flashcard list View to refresh itself when coming back from an activity
      */
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        binding.recyclerViewFlashcards.adapter?.notifyDataSetChanged()
-        super.onActivityResult(requestCode, resultCode, data)
+
+    private fun registerRefreshCallback() {
+        refreshListIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                Toast.makeText(this, "You just came back from an activity to the flashcard list view", Toast.LENGTH_SHORT).show()
+                binding.recyclerViewFlashcards.adapter?.notifyDataSetChanged()
+            }
     }
 }

@@ -3,11 +3,19 @@
     <string name="hint_frontFlashcardContent">What is your question?</string>
     <string name="hint_backFlashcardContent">And your answer here</string>
     <string name="btn_saveFlashcard">Save</string>
+    <string name="btn_showSolution">Show solution</string>
     <string name="btn_changeFlashcard">Save Changes</string>
+    <string name="btnBack">Back</string>
+    <string name="btnNext">Next</string>
     <string name="menu_addFlashcard">Add</string>
     <string name="menu_cancelButton">Cancel</string>
+    <string name="menu_startLearning">Start</string>
     <string name="message_addedFlashcard">Flashcard added</string>
     <string name="message_updatedFlashcard">Flashcard updated</string>
     <string name="message_discardedAddFlashcard">Flashcard not added. Please enter front/back content.</string>
+    <string name="flashcard_question">Flashcard Question</string>
+    <string name="flashcard_answer">Answer of flashcard</string>
+    <string name="message_beginningReached">First flashcard in deck</string>
+    <string name="message_endReached">Reached last flashcard in deck</string>
 
 </resources>

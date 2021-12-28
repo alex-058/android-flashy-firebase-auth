@@ -1,5 +1,6 @@
 package org.othr.flashyplayground.model
 
+import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 
 var previousId = 0L
