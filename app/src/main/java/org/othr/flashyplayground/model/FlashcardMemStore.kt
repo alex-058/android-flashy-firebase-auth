@@ -1,7 +1,9 @@
 package org.othr.flashyplayground.model
 
+import android.net.Uri
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
+import com.squareup.picasso.Picasso
 
 var previousId = 0L
 
@@ -27,6 +29,7 @@ class FlashcardMemStore: FlashcardStore {
         // retrieve flashcard from list to directly work on a list reference
         var foundFlashcard = flashcards.find { p -> p.id == flashcard.id}
         if (foundFlashcard != null) {
+            foundFlashcard.image = flashcard.image
             foundFlashcard.front = flashcard.front
             foundFlashcard.back = flashcard.back
             logAll()

@@ -2,7 +2,8 @@
     <string name="app_name">FlashyPlayground</string>
     <string name="hint_frontFlashcardContent">What is your question?</string>
     <string name="hint_backFlashcardContent">And your answer here</string>
-    <string name="btn_saveFlashcard">Save</string>
+    <string name="btn_addFlashcard">Add Flashcard</string>
+    <string name="btn_addImage">Add Image</string>
     <string name="btn_flipFlashcard">Flip Flashcard</string>
     <string name="btn_changeFlashcard">Save Changes</string>
     <string name="btnBack">Back</string>
@@ -18,5 +19,6 @@
     <string name="flashcard_answer">Answer of flashcard</string>
     <string name="message_beginningReached">First flashcard in deck</string>
     <string name="message_endReached">Reached last flashcard in deck</string>
+    <string name="select_image_for_flashcard">Select flashcard image</string>
 
 </resources>

@@ -59,13 +59,29 @@
                     android:hint="@string/hint_backFlashcardContent" />
 
                 <Button
-                    android:id="@+id/btnSave"
+                    android:id="@+id/btnAddImage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
-                    android:text="@string/btn_saveFlashcard"
+                    android:text="@string/btn_addImage"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/imageViewAddFlashcard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@mipmap/ic_launcher" />
+
+                <Button
+                    android:id="@+id/btnAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/btn_addFlashcard"
                     android:textSize="16sp" />
             </LinearLayout>
         </ScrollView>

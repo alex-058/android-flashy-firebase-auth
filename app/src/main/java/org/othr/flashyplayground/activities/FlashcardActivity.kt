@@ -15,12 +15,14 @@ import com.google.android.material.snackbar.Snackbar
 import org.othr.flashyplayground.main.MainApp
 import org.othr.flashyplayground.R
 import timber.log.Timber
+import org.othr.flashyplayground.helpers.*
+import com.squareup.picasso.Picasso
 
 class FlashcardActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFlashcardAddBinding
 
-    private lateinit var cancelIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
     var aFlashcard = FlashcardModel()
 
     // Declaration of MainApp
@@ -50,14 +52,17 @@ class FlashcardActivity : AppCompatActivity() {
             // Retrieve flashcard data
             aFlashcard = intent.extras?.getParcelable("edit_flashcard")!!
             // Set text flashcard text fields in order to allow user to edit text of existing flashcards
+            Picasso.get()
+                .load(aFlashcard.image)
+                .into(binding.imageViewAddFlashcard)
             binding.flashcardBack.setText(aFlashcard.back)
             binding.flashcardFront.setText(aFlashcard.front)
             // Set new toolbar title
-            binding.btnSave.setText(R.string.btn_changeFlashcard)
+            binding.btnAdd.setText(R.string.btn_changeFlashcard)
             edit = true
         }
 
-        binding.btnSave.setOnClickListener {
+        binding.btnAdd.setOnClickListener {
             aFlashcard.front = binding.flashcardFront.text.toString()
             aFlashcard.back  = binding.flashcardBack.text.toString()
 
@@ -94,7 +99,13 @@ class FlashcardActivity : AppCompatActivity() {
 
         }
 
+        binding.btnAddImage.setOnClickListener {
+            Toast.makeText(applicationContext, "Please select an image", Toast.LENGTH_LONG).show()
+            showImagePicker(imageIntentLauncher)
+        }
+
         // trigger callback methods
+        registerImageIntentCallback()
 
     }
 
@@ -116,4 +127,34 @@ class FlashcardActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    /**
+     * Callback methods
+     */
+
+    private fun registerImageIntentCallback() {
+        imageIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            {
+                result ->
+                    when (result.resultCode) {
+                        // if an image was successfully selected
+                        RESULT_OK -> {
+                            if (result.data != null) {
+                                // event handling for selected image (data) with Picasso
+                                aFlashcard.image = result.data!!.data!!
+                                // load stored image in image view with Picasso
+                                Picasso.get()
+                                    .load(aFlashcard.image)
+                                    .into(binding.imageViewAddFlashcard)
+                            }
+                        }
+
+                        RESULT_CANCELED -> {
+                            Toast.makeText(applicationContext, "Image not loaded successfully", Toast.LENGTH_LONG).show()
+                        }
+                    }
+
+            }
+
+    }
 }
