@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import org.othr.flashyplayground.databinding.ActivityFlashcardAddBinding
 import org.othr.flashyplayground.model.FlashcardModel
 import com.google.android.material.snackbar.Snackbar
@@ -16,6 +19,8 @@ import timber.log.Timber
 class FlashcardActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFlashcardAddBinding
+
+    private lateinit var cancelIntentLauncher: ActivityResultLauncher<Intent>
     var aFlashcard = FlashcardModel()
 
     // Declaration of MainApp
@@ -89,6 +94,8 @@ class FlashcardActivity : AppCompatActivity() {
 
         }
 
+        // trigger callback methods
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -101,7 +108,9 @@ class FlashcardActivity : AppCompatActivity() {
             R.id.cancel_item -> {
                 // Launch Flashcard List Activity
                 val launcherIntent = Intent(this, FlashcardListActivity::class.java)
-                startActivityForResult(launcherIntent, 0)
+                Toast.makeText(applicationContext, R.string.message_canceled, Toast.LENGTH_SHORT).show()
+                // simply start activity without looking for a result
+                startActivity(launcherIntent)
             }
         }
         return super.onOptionsItemSelected(item)

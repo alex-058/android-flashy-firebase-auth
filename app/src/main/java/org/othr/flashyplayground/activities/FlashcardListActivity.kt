@@ -58,7 +58,7 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
         when (item.itemId) {
             R.id.start_learn -> {
                 // Toast.makeText(applicationContext, "Starting Learn Activity", Toast.LENGTH_LONG).show()
-                val launcherIntent = Intent(this, FlashcardLearnFrontActivity::class.java)
+                val launcherIntent = Intent(this, FlashcardLearnActivity::class.java)
                 // pass in the flashcards array list (stack) needed for learning activity
                 launcherIntent.putParcelableArrayListExtra("learn" , app.flashcards.findAll())
                 refreshListIntentLauncher.launch(launcherIntent)
@@ -73,7 +73,7 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
         return super.onOptionsItemSelected(item)
     }
 
-    // event handling when clicking certain row / item in recycler view
+    // event handling when clicking certain row / item in recycler view (list)
     override fun onFlashcardItemClick(flashcard: FlashcardModel) {
         // Toast.makeText(applicationContext, "You just clicked a flashcard", Toast.LENGTH_LONG).show()
         val launcherIntent = Intent(this, FlashcardActivity::class.java)
@@ -82,13 +82,14 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
     }
 
     /**
+     * Callback method:
      * Forces Flashcard list View to refresh itself when coming back from an activity
      */
 
     private fun registerRefreshCallback() {
         refreshListIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                Toast.makeText(this, "You just came back from an activity to the flashcard list view", Toast.LENGTH_SHORT).show()
+                // Toast.makeText(this, "You just came back from an activity to the flashcard list view", Toast.LENGTH_SHORT).show()
                 binding.recyclerViewFlashcards.adapter?.notifyDataSetChanged()
             }
     }
