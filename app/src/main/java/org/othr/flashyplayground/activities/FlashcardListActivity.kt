@@ -13,12 +13,14 @@ import org.othr.flashyplayground.databinding.ActivityFlashcardListBinding
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.othr.flashyplayground.adapter.FlashcardAdapter
 import org.othr.flashyplayground.main.MainApp
+import org.othr.flashyplayground.model.FlashcardMemStore
 import org.othr.flashyplayground.model.FlashcardModel
 
 class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardListener {
 
     private lateinit var binding: ActivityFlashcardListBinding
-    lateinit var app : MainApp
+    lateinit var flashcardDeck: FlashcardMemStore
+    lateinit var app: MainApp
 
     // Launcher
     private lateinit var refreshListIntentLauncher: ActivityResultLauncher<Intent>
@@ -33,10 +35,16 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
         // Initialization of MainApp
         app = application as MainApp
 
+        // Retrieve flashcards from the topic activity
+        if (intent.hasExtra("flashcard_list")) {
+            var flashcards: ArrayList<FlashcardModel> = intent.extras?.getParcelableArrayList<FlashcardModel>("flashcard_list")!!
+            flashcardDeck.flashcards = flashcards
+        }
+
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerViewFlashcards.layoutManager = layoutManager
-        binding.recyclerViewFlashcards.adapter = FlashcardAdapter(app.flashcards.findAll(), this)
+        binding.recyclerViewFlashcards.adapter = FlashcardAdapter(flashcardDeck.findAll(), this)
 
         // Setup toolbar for add functionality (Actionbar)
         binding.toolbar.title = title
@@ -60,7 +68,7 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
                 // Toast.makeText(applicationContext, "Starting Learn Activity", Toast.LENGTH_LONG).show()
                 val launcherIntent = Intent(this, FlashcardLearnActivity::class.java)
                 // pass in the flashcards array list (stack) needed for learning activity
-                launcherIntent.putParcelableArrayListExtra("learn" , app.flashcards.findAll())
+                launcherIntent.putParcelableArrayListExtra("learn" , flashcardDeck.findAll())
                 refreshListIntentLauncher.launch(launcherIntent)
             }
             R.id.add_item -> {

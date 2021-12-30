@@ -11,17 +11,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FlashyPlayground">
         <activity
-            android:name=".activities.FlashcardLearnActivity"
-            android:exported="true" />
-        <activity
-            android:name=".activities.FlashcardListActivity"
-            android:exported="true">
+            android:name=".activities.FlashcardTopicListActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.FlashcardLearnActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.FlashcardListActivity"
+            android:exported="true" />
+
         <activity
             android:name=".activities.FlashcardActivity"
             android:exported="true" />
