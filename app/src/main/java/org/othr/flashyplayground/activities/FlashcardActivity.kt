@@ -2,10 +2,12 @@ package org.othr.flashyplayground.activities
 
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,6 +19,7 @@ import org.othr.flashyplayground.R
 import timber.log.Timber
 import org.othr.flashyplayground.helpers.*
 import com.squareup.picasso.Picasso
+import java.net.URI
 
 class FlashcardActivity : AppCompatActivity() {
 
@@ -84,11 +87,15 @@ class FlashcardActivity : AppCompatActivity() {
                     finish()
                 }
 
-
-                // Request focus operations
+                // Request focus operations and hide if present
                 binding.flashcardFront.text.clear()
                 binding.flashcardBack.text.clear()
+                if (aFlashcard.image != Uri.EMPTY) {
+                    binding.imageViewAddFlashcard.visibility = View.GONE
+                }
+                // set cursor back to the front
                 binding.flashcardFront.requestFocus()
+
             }
 
             else {

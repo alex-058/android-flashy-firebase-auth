@@ -1,13 +1,16 @@
 package org.othr.flashyplayground.activities
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import com.squareup.picasso.Picasso
 import org.othr.flashyplayground.R
 import org.othr.flashyplayground.databinding.ActivityFlashcardLearnBinding
 import org.othr.flashyplayground.model.FlashcardModel
@@ -84,8 +87,24 @@ class FlashcardLearnActivity : AppCompatActivity() {
 
             // flip between front and back of flashcard
             when (binding.learnQuestionFront.text) {
-                currentFlashcard.front -> binding.learnQuestionFront.text = currentFlashcard.back
-                currentFlashcard.back -> binding.learnQuestionFront.text = currentFlashcard.front
+                // switch to back
+                currentFlashcard.front -> {
+                    binding.learnQuestionFront.text = currentFlashcard.back
+                    // TODO: Load and show image if present
+                    if (currentFlashcard.image != Uri.EMPTY) {
+                        Picasso.get()
+                            .load(currentFlashcard.image)
+                            .into(binding.imageViewFlashcardLearn)
+                        binding.imageViewFlashcardLearn.visibility = View.VISIBLE
+                    }
+
+
+                }
+                // switch to front
+                currentFlashcard.back -> {
+                    binding.learnQuestionFront.text = currentFlashcard.front
+                    binding.imageViewFlashcardLearn.visibility = View.GONE
+                }
             }
         }
 
