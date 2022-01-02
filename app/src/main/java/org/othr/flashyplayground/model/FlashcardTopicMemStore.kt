@@ -5,13 +5,17 @@ package org.othr.flashyplayground.model
  */
 class FlashcardTopicMemStore {
 
+    /**
+     * This should be displayed in the recycler view
+     */
     var flashcardTopics = arrayListOf<FlashcardTopicModel>()
 
-    fun createTopic (flashcardTopic: FlashcardTopicModel) {
+    fun addTopic (flashcardTopic: FlashcardTopicModel) {
         flashcardTopics.add(flashcardTopic)
         }
 
     fun findAllTopics(): ArrayList<FlashcardTopicModel> {
         return flashcardTopics
     }
+
 }

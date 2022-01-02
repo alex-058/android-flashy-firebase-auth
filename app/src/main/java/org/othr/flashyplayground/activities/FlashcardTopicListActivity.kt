@@ -3,6 +3,7 @@ package org.othr.flashyplayground.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.othr.flashyplayground.adapter.FlashcardTopicAdapter
 import org.othr.flashyplayground.databinding.ActivityFlashcardTopicListBinding
@@ -25,7 +26,7 @@ class FlashcardTopicListActivity : AppCompatActivity(), FlashcardTopicAdapter.Fl
         app = application as MainApp
 
         // Initialize recycler view
-        val layoutManager = LinearLayoutManager(this)
+        val layoutManager = GridLayoutManager(applicationContext, 2)
         binding.recyclerViewFlashcardTopics.layoutManager = layoutManager
         binding.recyclerViewFlashcardTopics.adapter = FlashcardTopicAdapter(app.flashcardTopics.findAllTopics(), this)
     }
@@ -41,4 +42,6 @@ class FlashcardTopicListActivity : AppCompatActivity(), FlashcardTopicAdapter.Fl
         launcherIntent.putParcelableArrayListExtra("flashcard_list", flashcardTopic.flashcards)
         startActivity(launcherIntent)
     }
+
+
 }

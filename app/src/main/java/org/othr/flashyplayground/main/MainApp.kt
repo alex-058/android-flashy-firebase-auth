@@ -9,6 +9,7 @@ import org.othr.flashyplayground.model.FlashcardTopicModel
 class MainApp: Application() {
 
     val flashcards = FlashcardMemStore()
+    val flashcards2 = FlashcardMemStore()
     var flashcardTopics = FlashcardTopicMemStore()
 
     // Flashcards for testing
@@ -22,8 +23,13 @@ class MainApp: Application() {
         flashcards.create(FlashcardModel("What is the capital of England?", "Londong"))
         flashcards.create(FlashcardModel("Who was the first cancellor in Germany?", "Konrad Adenauer"))
 
+        flashcards2.create(FlashcardModel("hacer", "hago haces hace hacemos hacéis hacen"))
+
         val topic1 = FlashcardTopicModel("Math", "Math 1st semester", flashcards.findAll())
-        flashcardTopics.createTopic(topic1)
+        val topic2 = FlashcardTopicModel("Spanish", "Spanish vocs", flashcards2.findAll())
+
+        flashcardTopics.addTopic(topic1)
+        flashcardTopics.addTopic(topic2)
 
     }
 

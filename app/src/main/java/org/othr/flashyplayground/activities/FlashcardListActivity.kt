@@ -19,8 +19,8 @@ import org.othr.flashyplayground.model.FlashcardModel
 class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardListener {
 
     private lateinit var binding: ActivityFlashcardListBinding
-    lateinit var flashcardDeck: FlashcardMemStore
     lateinit var app: MainApp
+    lateinit var flashcardDeck: FlashcardMemStore
 
     // Launcher
     private lateinit var refreshListIntentLauncher: ActivityResultLauncher<Intent>
@@ -36,10 +36,10 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
         app = application as MainApp
 
         // Retrieve flashcards from the topic activity
-        if (intent.hasExtra("flashcard_list")) {
-            var flashcards: ArrayList<FlashcardModel> = intent.extras?.getParcelableArrayList<FlashcardModel>("flashcard_list")!!
-            flashcardDeck.flashcards = flashcards
-        }
+        var flashcardList: ArrayList<FlashcardModel> = intent.extras?.getParcelableArrayList<FlashcardModel>("flashcard_list")!!
+        // initialize FlashcardMemStore
+        flashcardDeck = FlashcardMemStore()
+        flashcardDeck.flashcards = flashcardList
 
 
         val layoutManager = LinearLayoutManager(this)
