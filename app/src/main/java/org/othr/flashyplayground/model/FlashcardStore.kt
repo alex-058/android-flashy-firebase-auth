@@ -2,8 +2,8 @@ package org.othr.flashyplayground.model
 
 interface FlashcardStore {
 
-    fun create(flashcard: FlashcardModel)
-    fun findAll(): ArrayList<FlashcardModel>
-    fun update(flashcard: FlashcardModel)
+    fun addFlashcard(flashcard: FlashcardModel)
+    fun findAllFlashcards(): ArrayList<FlashcardModel>
+    fun updateFlashcard( flashcard: FlashcardModel)
 
 }

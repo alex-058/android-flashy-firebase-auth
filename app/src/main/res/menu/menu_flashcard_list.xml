@@ -12,5 +12,4 @@
         android:title="@string/menu_addFlashcard"
         app:showAsAction="always"/>
 
-
 </menu>

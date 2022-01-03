@@ -9,8 +9,6 @@ import org.othr.flashyplayground.model.FlashcardTopicModel
 class MainApp: Application() {
 
     val flashcards = FlashcardMemStore()
-    val flashcards2 = FlashcardMemStore()
-    var flashcardTopics = FlashcardTopicMemStore()
 
     // Flashcards for testing
 
@@ -19,17 +17,22 @@ class MainApp: Application() {
         // create a topic also here for testing purposes
         // TODO: trigger create etc. for the flashcards in the property of the topic object
 
-        flashcards.create(FlashcardModel("What is 5 * 5?", "25"))
-        flashcards.create(FlashcardModel("What is the capital of England?", "Londong"))
-        flashcards.create(FlashcardModel("Who was the first cancellor in Germany?", "Konrad Adenauer"))
+        // Setup demo environment
 
-        flashcards2.create(FlashcardModel("hacer", "hago haces hace hacemos hacéis hacen"))
+        val topic1 = FlashcardTopicModel(title = "Math", description = "Math 1st semester")
+        val topic2 = FlashcardTopicModel(title = "Spanish", description = "Spanish vocs")
 
-        val topic1 = FlashcardTopicModel("Math", "Math 1st semester", flashcards.findAll())
-        val topic2 = FlashcardTopicModel("Spanish", "Spanish vocs", flashcards2.findAll())
+        flashcards.addTopic(topic1)
+        flashcards.addTopic(topic2)
 
-        flashcardTopics.addTopic(topic1)
-        flashcardTopics.addTopic(topic2)
+        flashcards.setCurrentTopic(topic1)
+        flashcards.addFlashcard(FlashcardModel("What is 5 * 5?", "25"))
+
+        flashcards.setCurrentTopic(topic2)
+        flashcards.addFlashcard(FlashcardModel("What is the capital of England?", "Londong"))
+        flashcards.addFlashcard(FlashcardModel("Who was the first cancellor in Germany?", "Konrad Adenauer"))
+
+
 
     }
 

@@ -15,12 +15,12 @@ import org.othr.flashyplayground.adapter.FlashcardAdapter
 import org.othr.flashyplayground.main.MainApp
 import org.othr.flashyplayground.model.FlashcardMemStore
 import org.othr.flashyplayground.model.FlashcardModel
+import org.othr.flashyplayground.model.FlashcardTopicModel
 
 class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardListener {
 
     private lateinit var binding: ActivityFlashcardListBinding
     lateinit var app: MainApp
-    lateinit var flashcardDeck: FlashcardMemStore
 
     // Launcher
     private lateinit var refreshListIntentLauncher: ActivityResultLauncher<Intent>
@@ -35,23 +35,16 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
         // Initialization of MainApp
         app = application as MainApp
 
-        // Retrieve flashcards from the topic activity
-        var flashcardList: ArrayList<FlashcardModel> = intent.extras?.getParcelableArrayList<FlashcardModel>("flashcard_list")!!
-        // initialize FlashcardMemStore
-        flashcardDeck = FlashcardMemStore()
-        flashcardDeck.flashcards = flashcardList
-
-
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerViewFlashcards.layoutManager = layoutManager
-        binding.recyclerViewFlashcards.adapter = FlashcardAdapter(flashcardDeck.findAll(), this)
+        binding.recyclerViewFlashcards.adapter = FlashcardAdapter(app.flashcards.findAllFlashcards(), this)
 
         // Setup toolbar for add functionality (Actionbar)
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)
 
         // Trigger callback methods
-        registerRefreshCallback()
+        registerListRefreshCallback()
 
     }
 
@@ -68,7 +61,7 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
                 // Toast.makeText(applicationContext, "Starting Learn Activity", Toast.LENGTH_LONG).show()
                 val launcherIntent = Intent(this, FlashcardLearnActivity::class.java)
                 // pass in the flashcards array list (stack) needed for learning activity
-                launcherIntent.putParcelableArrayListExtra("learn" , flashcardDeck.findAll())
+                launcherIntent.putParcelableArrayListExtra("learn" , app.flashcards.findAllFlashcards())
                 refreshListIntentLauncher.launch(launcherIntent)
             }
             R.id.add_item -> {
@@ -94,7 +87,7 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
      * Forces Flashcard list View to refresh itself when coming back from an activity
      */
 
-    private fun registerRefreshCallback() {
+    private fun registerListRefreshCallback() {
         refreshListIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 // Toast.makeText(this, "You just came back from an activity to the flashcard list view", Toast.LENGTH_SHORT).show()

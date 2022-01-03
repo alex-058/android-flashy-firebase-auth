@@ -4,5 +4,5 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class FlashcardTopicModel (var title: String = "", var description: String = "", var flashcards: ArrayList<FlashcardModel> = arrayListOf()) : Parcelable{
+data class FlashcardTopicModel (var topicId: Long = 0, var title: String = "", var description: String = "") : Parcelable{
 }

@@ -27,7 +27,6 @@ class FlashcardTopicAdapter (private var flashcardTopics: ArrayList<FlashcardTop
         return flashcardTopics.size
     }
 
-    // operate on the specific rows of the recycler view / RowFlashcardBinding
     class MainHolder (private val binding: RowFlashcardTopicsBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind (flashcardTopic: FlashcardTopicModel, listener: FlashcardTopicListener) {
