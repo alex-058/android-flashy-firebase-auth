@@ -35,9 +35,8 @@ class FlashcardTopicListActivity : AppCompatActivity(), FlashcardTopicAdapter.Fl
         app = application as MainApp
 
         // Initialize recycler view / adpater
-        val layoutManager = LinearLayoutManager(applicationContext)
+        val layoutManager = GridLayoutManager(applicationContext, 2)
         binding.recyclerViewFlashcardTopics.layoutManager = layoutManager
-        var tempList = app.flashcards.findAllTopics()
         binding.recyclerViewFlashcardTopics.adapter = FlashcardTopicAdapter(app.flashcards.findAllTopics(), this)
 
         // Toolbar support
@@ -72,6 +71,25 @@ class FlashcardTopicListActivity : AppCompatActivity(), FlashcardTopicAdapter.Fl
         val launcherIntent = Intent(this, FlashcardListActivity::class.java)
         app.flashcards.setCurrentTopic(flashcardTopic)
         startActivity(launcherIntent)
+    }
+
+    /**
+     * Event handling when long pressing an item in the flashcard topic recycler view -> edit behaviour
+     */
+    override fun onFlashcardTopicClickLong(flashcardTopic: FlashcardTopicModel) {
+        val launcherIntent = Intent(this, FlashcardTopicActivity::class.java)
+        launcherIntent.putExtra("edit_topic", flashcardTopic)
+        refreshTopicListIntentLauncher.launch(launcherIntent)
+    }
+
+    override fun refreshFlashcardCount(topicModel: FlashcardTopicModel): String {
+        var flashcardCount = app.flashcards.flashcardMap.get(topicModel)?.size!!
+        if (flashcardCount != 1) {
+            return "${flashcardCount.toString()} items"
+        }
+        else {
+            return "$flashcardCount item"
+        }
     }
 
     private fun registerTopicRefreshCallback() {

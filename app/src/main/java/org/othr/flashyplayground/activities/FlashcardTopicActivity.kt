@@ -28,6 +28,17 @@ class FlashcardTopicActivity : AppCompatActivity() {
         binding = ActivityFlashcardTopicAddBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        var edit = false
+
+        if (intent.hasExtra("edit_topic")) {
+            aTopic = intent.extras?.getParcelable("edit_topic")!!
+            binding.topicTitle.setText(aTopic.title)
+            binding.topicDescription.setText(aTopic.description)
+            // Reuse string variable
+            binding.btnTopicAdd.setText(R.string.btn_changeFlashcard)
+            edit = true
+        }
+
         // Initalization of Main App
         app = application as MainApp
 
@@ -36,18 +47,23 @@ class FlashcardTopicActivity : AppCompatActivity() {
             aTopic.description = binding.topicDescription.text.toString()
 
             if (aTopic.title.isNotEmpty()) {
-                app.flashcards.addTopic(aTopic.copy())
-                Snackbar
-                    .make(it, R.string.message_addedTopic, Snackbar.LENGTH_LONG)
-                    .show()
-                // setResult(RESULT_OK)
-
-                // Launch back list activity
-                var laucherIntent = Intent(applicationContext, FlashcardTopicListActivity::class.java)
-                startActivity(laucherIntent)
+                if (edit == false) {
+                    app.flashcards.addTopic(aTopic.copy())
+                    Snackbar
+                        .make(it, R.string.message_addedTopic, Snackbar.LENGTH_LONG)
+                        .show()
+                    // setResult(RESULT_OK)
+                }
+                else {
+                    app.flashcards.updateTopic(aTopic.copy())
+                }
             }
 
-            finish()
+            // Always launch back list activity after adding / updating the topic
+
+            var laucherIntent = Intent(applicationContext, FlashcardTopicListActivity::class.java)
+            startActivity(laucherIntent)
+
         }
     }
 }

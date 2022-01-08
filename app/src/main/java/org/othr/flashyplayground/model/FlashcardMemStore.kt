@@ -1,9 +1,6 @@
 package org.othr.flashyplayground.model
 
-import android.net.Uri
-import kotlinx.parcelize.Parcelize
 import timber.log.Timber
-import com.squareup.picasso.Picasso
 
 var previousIdFlashcard = 0L
 var previousIdTopic = 0L
@@ -17,11 +14,15 @@ internal fun getIdTopic (): Long {
 
 class FlashcardMemStore: FlashcardStore, FlashcardTopicStore {
 
-    // private var flashcards = ArrayList<FlashcardModel>()
-    // Connection between flashcards and topics
+    // Overall collection to store topic (key) and corresponding flashcard deck (value)
     var flashcardMap =  mutableMapOf<FlashcardTopicModel, ArrayList<FlashcardModel>>()
+
     // stores topic for current working flashcard deck for convenience reasons
     lateinit var topic: FlashcardTopicModel
+
+    /**
+     * Flashcard operations
+     */
 
     override fun addFlashcard(flashcard: FlashcardModel) {
         flashcard.id = getIdFlashcard()
@@ -34,8 +35,12 @@ class FlashcardMemStore: FlashcardStore, FlashcardTopicStore {
         return flashcardMap.getValue(topic)
     }
 
+    override fun findFlashcardCount(topic: FlashcardTopicModel): Int {
+        return flashcardMap.getValue(topic).size
+    }
+
     override fun updateFlashcard(flashcard: FlashcardModel) {
-        // retrieve flashcard from map value to directly work on a list reference
+        // retrieve flashcard from map value to directly work on the list reference
         var foundFlashcard = flashcardMap.get(topic)?.find { p -> p.id == flashcard.id}
         if (foundFlashcard != null) {
             foundFlashcard.image = flashcard.image
@@ -46,6 +51,10 @@ class FlashcardMemStore: FlashcardStore, FlashcardTopicStore {
 
     }
 
+    /**
+     * Topic operations
+     */
+
     override fun addTopic(topic: FlashcardTopicModel) {
         topic.topicId = getIdTopic()
         // Put topic in map and create empty list for flashcard deck
@@ -54,17 +63,24 @@ class FlashcardMemStore: FlashcardStore, FlashcardTopicStore {
     }
 
     override fun updateTopic(topic: FlashcardTopicModel) {
-        var foundTopic = flashcardMap.keys.toMutableList().find { p -> p.title == topic.title }
-        if (foundTopic != null) {
-            foundTopic.title = topic.title
-            foundTopic.description = topic.description
+        /**
+         * Workaround, due to the fact that keys in a map collection are unique (hashing) and cannot be overwritten
+         * -> no editing in this way possible
+         */
+        // Get reference from map for topic to update
+        var topicToUpdate = flashcardMap.keys.find { p -> p.topicId == topic.topicId }
+        // Temporary store content (value) of map to updated topic
+        var tempContent = flashcardMap.get(topicToUpdate)
+        if (topicToUpdate != null && tempContent != null) {
+            flashcardMap.remove(topicToUpdate)
+            topicToUpdate.title = topic.title
+            topicToUpdate.description = topic.description
+            flashcardMap.put(topicToUpdate, tempContent)
         }
+
         logAll()
     }
 
-    /**
-     * Needed to display it on recycler view
-     */
     override fun findAllTopics(): ArrayList<FlashcardTopicModel> {
         return flashcardMap.keys.toCollection(ArrayList<FlashcardTopicModel>())
     }
@@ -72,6 +88,10 @@ class FlashcardMemStore: FlashcardStore, FlashcardTopicStore {
     override fun setCurrentTopic(currentTopic: FlashcardTopicModel) {
         topic = currentTopic
     }
+
+    /**
+     * Logging
+     */
 
     private fun logAll() {
         // log info message

@@ -69,13 +69,17 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
                 val launcherIntent = Intent(this, FlashcardActivity::class.java)
                 refreshListIntentLauncher.launch(launcherIntent)
             }
+            R.id.home -> {
+                val launcherIntent = Intent(this, FlashcardTopicListActivity::class.java)
+                refreshListIntentLauncher.launch(launcherIntent)
+            }
         }
 
         return super.onOptionsItemSelected(item)
     }
 
     // event handling when clicking certain row / item in recycler view (list)
-    override fun onFlashcardItemClick(flashcard: FlashcardModel) {
+    override fun onFlashcardItemClickLong(flashcard: FlashcardModel) {
         // Toast.makeText(applicationContext, "You just clicked a flashcard", Toast.LENGTH_LONG).show()
         val launcherIntent = Intent(this, FlashcardActivity::class.java)
         launcherIntent.putExtra("edit_flashcard", flashcard)

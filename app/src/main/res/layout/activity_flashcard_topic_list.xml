@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:background="@color/purple_500"
         android:fitsSystemWindows="true"
-        app:elevation="0dip">
+        app:elevation="0dip"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarFlashcardTopics"
