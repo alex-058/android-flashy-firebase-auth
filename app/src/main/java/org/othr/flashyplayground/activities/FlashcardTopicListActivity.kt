@@ -83,7 +83,7 @@ class FlashcardTopicListActivity : AppCompatActivity(), FlashcardTopicAdapter.Fl
     }
 
     override fun refreshFlashcardCount(topicModel: FlashcardTopicModel): String {
-        var flashcardCount = app.flashcards.flashcardMap.get(topicModel)?.size!!
+        var flashcardCount = app.flashcards.findFlashcardMap().get(topicModel)?.size!!
         if (flashcardCount != 1) {
             return "${flashcardCount.toString()} items"
         }

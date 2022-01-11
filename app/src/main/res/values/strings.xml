@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FlashyPlayground</string>
+    <string name="app_name">Flashy</string>
     <string name="hint_frontFlashcardContent">What is your question?</string>
     <string name="hint_backFlashcardContent">And your answer here</string>
     <string name="hint_topicDescriptionContent">Description of the flashcard deck</string>

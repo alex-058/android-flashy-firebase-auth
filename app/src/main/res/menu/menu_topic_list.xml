@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/add_topic_item"
-        android:icon="@android:drawable/ic_menu_add"
+        android:icon="@drawable/ic_baseline_add_24"
         android:title="@string/menu_addTopic"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 
 </menu>

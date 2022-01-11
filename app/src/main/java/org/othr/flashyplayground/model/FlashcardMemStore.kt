@@ -12,7 +12,7 @@ internal fun getIdTopic (): Long {
     return previousIdTopic++
 }
 
-class FlashcardMemStore: FlashcardStore, FlashcardTopicStore {
+class FlashcardMemStore: FlashcardTopicStore {
 
     // Overall collection to store topic (key) and corresponding flashcard deck (value)
     var flashcardMap =  mutableMapOf<FlashcardTopicModel, ArrayList<FlashcardModel>>()
@@ -87,6 +87,10 @@ class FlashcardMemStore: FlashcardStore, FlashcardTopicStore {
 
     override fun setCurrentTopic(currentTopic: FlashcardTopicModel) {
         topic = currentTopic
+    }
+
+    override fun findFlashcardMap(): Map<FlashcardTopicModel, ArrayList<FlashcardModel>> {
+        return flashcardMap
     }
 
     /**
