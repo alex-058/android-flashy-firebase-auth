@@ -11,10 +11,5 @@
         android:icon="@android:drawable/ic_media_play"
         android:title="@string/menu_startLearning"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/add_item"
-        android:icon="@drawable/ic_baseline_add_24"
-        android:title="@string/menu_addFlashcard"
-        app:showAsAction="always" />
 
 </menu>

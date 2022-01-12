@@ -43,6 +43,13 @@ class FlashcardTopicListActivity : AppCompatActivity(), FlashcardTopicAdapter.Fl
         binding.toolbarFlashcardTopics.title = title
         setSupportActionBar(binding.toolbarFlashcardTopics)
 
+        // Event handling for topic add button
+        binding.topicAddBttn.setOnClickListener {
+            // launch FlashcardTopicActivity
+            val launcherIntent = Intent(this, FlashcardTopicActivity::class.java)
+            refreshTopicListIntentLauncher.launch(launcherIntent)
+        }
+
         registerTopicRefreshCallback()
     }
 
@@ -52,6 +59,7 @@ class FlashcardTopicListActivity : AppCompatActivity(), FlashcardTopicAdapter.Fl
         return super.onCreateOptionsMenu(menu)
     }
 
+    /* Event handling for toolbar -> not needed at the moment
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.add_topic_item -> {
@@ -63,6 +71,8 @@ class FlashcardTopicListActivity : AppCompatActivity(), FlashcardTopicAdapter.Fl
 
         return super.onOptionsItemSelected(item)
     }
+     */
+
 
     /**
      * Event handling when clicking on an item on the flashcard topic recycler view

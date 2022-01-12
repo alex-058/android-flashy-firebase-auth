@@ -2,6 +2,8 @@ package org.othr.flashyplayground.main
 
 import android.app.Application
 import org.othr.flashyplayground.model.FlashcardMemStore
+import org.othr.flashyplayground.model.FlashcardModel
+import org.othr.flashyplayground.model.FlashcardTopicModel
 import org.othr.flashyplayground.model.FlashcardTopicStore
 
 class MainApp : Application() {
@@ -16,7 +18,6 @@ class MainApp : Application() {
         flashcards = FlashcardMemStore()
 
         // Setup demo environment
-        /*
         val topic1 = FlashcardTopicModel(title = "Math", description = "Math 1st semester")
         val topic2 = FlashcardTopicModel(title = "Spanish", description = "Spanish vocs")
 
@@ -28,7 +29,6 @@ class MainApp : Application() {
         flashcards.setCurrentTopic(topic2)
         flashcards.addFlashcard(FlashcardModel("What is the capital of England?", "London"))
         flashcards.addFlashcard(FlashcardModel("Who was the first cancellor in Germany?", "Konrad Adenauer"))
-        */
     }
 
 }

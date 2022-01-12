@@ -19,6 +19,7 @@ interface FlashcardTopicStore {
     fun updateTopic(topic: FlashcardTopicModel)
     fun findAllTopics(): ArrayList<FlashcardTopicModel>
     fun setCurrentTopic(topic: FlashcardTopicModel)
+    fun getCurrentTopic(): FlashcardTopicModel
 
     /**
      * Methods for map operation

@@ -89,6 +89,10 @@ class FlashcardMemStore: FlashcardTopicStore {
         topic = currentTopic
     }
 
+    override fun getCurrentTopic(): FlashcardTopicModel {
+        return topic
+    }
+
     override fun findFlashcardMap(): Map<FlashcardTopicModel, ArrayList<FlashcardModel>> {
         return flashcardMap
     }

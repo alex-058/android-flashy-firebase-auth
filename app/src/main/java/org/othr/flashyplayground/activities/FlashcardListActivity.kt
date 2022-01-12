@@ -13,9 +13,7 @@ import org.othr.flashyplayground.databinding.ActivityFlashcardListBinding
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.othr.flashyplayground.adapter.FlashcardAdapter
 import org.othr.flashyplayground.main.MainApp
-import org.othr.flashyplayground.model.FlashcardMemStore
 import org.othr.flashyplayground.model.FlashcardModel
-import org.othr.flashyplayground.model.FlashcardTopicModel
 
 class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardListener {
 
@@ -40,9 +38,15 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
         binding.recyclerViewFlashcards.adapter = FlashcardAdapter(app.flashcards.findAllFlashcards(), this)
 
         // Setup toolbar for add functionality (Actionbar)
-        binding.toolbar.title = title
+        binding.toolbar.title = app.flashcards.getCurrentTopic().title
         setSupportActionBar(binding.toolbar)
 
+        // Event handling for flashcard add buttong
+        binding.flashcardAddBttn.setOnClickListener {
+            // launch FlashcardActivity
+            val launcherIntent = Intent(this, FlashcardActivity::class.java)
+            refreshListIntentLauncher.launch(launcherIntent)
+        }
         // Trigger callback methods
         registerListRefreshCallback()
 
@@ -62,11 +66,6 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
                 val launcherIntent = Intent(this, FlashcardLearnActivity::class.java)
                 // pass in the flashcards array list (stack) needed for learning activity
                 launcherIntent.putParcelableArrayListExtra("learn" , app.flashcards.findAllFlashcards())
-                refreshListIntentLauncher.launch(launcherIntent)
-            }
-            R.id.add_item -> {
-                // launch FlashcardActivity
-                val launcherIntent = Intent(this, FlashcardActivity::class.java)
                 refreshListIntentLauncher.launch(launcherIntent)
             }
             R.id.home -> {
