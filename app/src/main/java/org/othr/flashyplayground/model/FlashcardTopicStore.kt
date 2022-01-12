@@ -8,6 +8,7 @@ interface FlashcardTopicStore {
 
     fun addFlashcard(flashcard: FlashcardModel)
     fun updateFlashcard( flashcard: FlashcardModel)
+    fun deleteFlashcard(position: Int)
     fun findAllFlashcards(): ArrayList<FlashcardModel>
     fun findFlashcardCount(topic: FlashcardTopicModel): Int
 

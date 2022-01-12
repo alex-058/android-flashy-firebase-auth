@@ -8,9 +8,11 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.recyclerview.widget.ItemTouchHelper
 import org.othr.flashyplayground.R
 import org.othr.flashyplayground.databinding.ActivityFlashcardListBinding
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.othr.flashyplayground.adapter.FlashcardAdapter
 import org.othr.flashyplayground.main.MainApp
 import org.othr.flashyplayground.model.FlashcardModel
@@ -47,6 +49,10 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
             val launcherIntent = Intent(this, FlashcardActivity::class.java)
             refreshListIntentLauncher.launch(launcherIntent)
         }
+
+        // Attach TouchHelper (Swiping Functionality) to recycler view
+        ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding.recyclerViewFlashcards)
+
         // Trigger callback methods
         registerListRefreshCallback()
 
@@ -83,6 +89,25 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
         val launcherIntent = Intent(this, FlashcardActivity::class.java)
         launcherIntent.putExtra("edit_flashcard", flashcard)
         refreshListIntentLauncher.launch(launcherIntent)
+    }
+
+    // item touch helper property to implement swipe feature for deletion
+    val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+        // onMove not needed -> default implementation
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return true
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            app.flashcards.deleteFlashcard(viewHolder.adapterPosition)
+            // notify recycler view that item has been removed
+            binding.recyclerViewFlashcards.adapter?.notifyItemRemoved(viewHolder.adapterPosition)
+        }
+
     }
 
     /**

@@ -51,6 +51,11 @@ class FlashcardMemStore: FlashcardTopicStore {
 
     }
 
+    override fun deleteFlashcard(position: Int) {
+        findAllFlashcards().removeAt(position)
+        logAll()
+    }
+
     /**
      * Topic operations
      */
