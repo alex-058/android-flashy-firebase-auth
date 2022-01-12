@@ -85,6 +85,11 @@ class FlashcardMemStore: FlashcardTopicStore {
         return flashcardMap.keys.toCollection(ArrayList<FlashcardTopicModel>())
     }
 
+    override fun deleteTopic(topic: FlashcardTopicModel) {
+        flashcardMap.remove(topic)
+        logAll()
+    }
+
     override fun setCurrentTopic(currentTopic: FlashcardTopicModel) {
         topic = currentTopic
     }

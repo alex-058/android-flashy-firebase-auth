@@ -3,6 +3,8 @@ package org.othr.flashyplayground.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import com.google.android.material.snackbar.Snackbar
 import org.othr.flashyplayground.R
 import org.othr.flashyplayground.databinding.ActivityFlashcardTopicAddBinding
@@ -37,6 +39,10 @@ class FlashcardTopicActivity : AppCompatActivity() {
             // Reuse string variable
             binding.btnTopicAdd.setText(R.string.btn_changeFlashcard)
             edit = true
+
+            // Toolbar support with deleting feature
+            binding.toolbarTopicAdd.title = aTopic.title
+            setSupportActionBar(binding.toolbarTopicAdd)
         }
 
         // Initalization of Main App
@@ -65,5 +71,21 @@ class FlashcardTopicActivity : AppCompatActivity() {
             startActivity(laucherIntent)
 
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_topic_delete, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_topic_delete -> {
+                app.flashcards.deleteTopic(aTopic.copy())
+                val launcherIntent = Intent(this, FlashcardTopicListActivity::class.java)
+                startActivity(launcherIntent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
