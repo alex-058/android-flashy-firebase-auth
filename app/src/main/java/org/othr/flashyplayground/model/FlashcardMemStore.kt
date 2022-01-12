@@ -18,7 +18,7 @@ class FlashcardMemStore: FlashcardTopicStore {
     var flashcardMap =  mutableMapOf<FlashcardTopicModel, ArrayList<FlashcardModel>>()
 
     // stores topic for current working flashcard deck for convenience reasons
-    lateinit var topic: FlashcardTopicModel
+    lateinit var workingTopic: FlashcardTopicModel
 
     /**
      * Flashcard operations
@@ -26,13 +26,13 @@ class FlashcardMemStore: FlashcardTopicStore {
 
     override fun addFlashcard(flashcard: FlashcardModel) {
         flashcard.id = getIdFlashcard()
-        flashcardMap.get(topic)?.add(flashcard)
+        flashcardMap.get(workingTopic)?.add(flashcard)
         logAll()
     }
 
     override fun findAllFlashcards(): ArrayList<FlashcardModel> {
         // retrieve flashcards from provided topic
-        return flashcardMap.getValue(topic)
+        return flashcardMap.getValue(workingTopic)
     }
 
     override fun findFlashcardCount(topic: FlashcardTopicModel): Int {
@@ -41,7 +41,7 @@ class FlashcardMemStore: FlashcardTopicStore {
 
     override fun updateFlashcard(flashcard: FlashcardModel) {
         // retrieve flashcard from map value to directly work on the list reference
-        var foundFlashcard = flashcardMap.get(topic)?.find { p -> p.id == flashcard.id}
+        var foundFlashcard = flashcardMap.get(workingTopic)?.find { p -> p.id == flashcard.id}
         if (foundFlashcard != null) {
             foundFlashcard.image = flashcard.image
             foundFlashcard.front = flashcard.front
@@ -95,12 +95,12 @@ class FlashcardMemStore: FlashcardTopicStore {
         logAll()
     }
 
-    override fun setCurrentTopic(currentTopic: FlashcardTopicModel) {
-        topic = currentTopic
+    override fun setCurrentTopic(topic: FlashcardTopicModel) {
+        workingTopic = topic
     }
 
     override fun getCurrentTopic(): FlashcardTopicModel {
-        return topic
+        return workingTopic
     }
 
     override fun findFlashcardMap(): Map<FlashcardTopicModel, ArrayList<FlashcardModel>> {

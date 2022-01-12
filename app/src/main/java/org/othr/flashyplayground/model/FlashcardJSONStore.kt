@@ -6,19 +6,21 @@ import com.google.gson.reflect.TypeToken
 import timber.log.Timber
 import java.lang.reflect.*
 import java.util.*
-import kotlin.collections.LinkedHashMap
 import android.content.Context
 import org.othr.flashyplayground.helpers.*
-import kotlin.coroutines.coroutineContext
 
 
 const val JSON_FILE = "flashcards.json"
 
-val gsonBuilder: Gson = GsonBuilder().setPrettyPrinting()
+/**
+ * TODO: Is the enableComplexMapKeySerialization() needed?
+ */
+val gsonBuilder: Gson = GsonBuilder().enableComplexMapKeySerialization()
+    .setPrettyPrinting()
     .registerTypeAdapter(Uri::class.java, FlashcardJSONStore.UriParser())
     .create()
 
-val listType: Type = object : TypeToken<LinkedHashMap<FlashcardTopicModel, ArrayList<FlashcardModel>>>() {}.type
+val listType: Type = object : TypeToken<Map<FlashcardTopicModel, ArrayList<FlashcardModel>>>() {}.type
 
 fun generateRandomId(): Long {
     return Random().nextLong()
@@ -28,54 +30,99 @@ class FlashcardJSONStore(private val context: Context): FlashcardTopicStore {
     var flashcardMap =  mutableMapOf<FlashcardTopicModel, ArrayList<FlashcardModel>>()
 
     // stores topic for current working flashcard deck for convenience reasons
-    lateinit var topic: FlashcardTopicModel
+    lateinit var workingTopic: FlashcardTopicModel
+
+    init {
+        if (exists(context, JSON_FILE)) {
+            deserialize()
+        }
+    }
+
+    /**
+     * Flashcard operations
+     */
 
     override fun addFlashcard(flashcard: FlashcardModel) {
-        TODO("Not yet implemented")
+        flashcard.id = generateRandomId()
+        flashcardMap.get(workingTopic)?.add(flashcard)
+        logAll()
+        serialize()
     }
 
     override fun updateFlashcard(flashcard: FlashcardModel) {
-        TODO("Not yet implemented")
+        var foundFlashcard = flashcardMap.get(workingTopic)?.find { p -> p.id == flashcard.id}
+        if (foundFlashcard != null) {
+            foundFlashcard.image = flashcard.image
+            foundFlashcard.front = flashcard.front
+            foundFlashcard.back = flashcard.back
+            logAll()
+            serialize()
+        }
     }
 
     override fun deleteFlashcard(position: Int) {
-        TODO("Not yet implemented")
+        findAllFlashcards().removeAt(position)
+        logAll()
+        serialize()
     }
 
     override fun findAllFlashcards(): ArrayList<FlashcardModel> {
-        TODO("Not yet implemented")
+        return flashcardMap.getValue(workingTopic)
     }
 
     override fun findFlashcardCount(topic: FlashcardTopicModel): Int {
-        TODO("Not yet implemented")
+        return flashcardMap.getValue(topic).size
     }
 
+    /**
+     * Topic operations
+     */
+
     override fun addTopic(topic: FlashcardTopicModel) {
-        TODO("Not yet implemented")
+        topic.topicId = generateRandomId()
+        // Put topic in map and create empty list for flashcard deck
+        flashcardMap.put(topic, ArrayList<FlashcardModel>())
+        logAll()
+        serialize()
     }
 
     override fun updateTopic(topic: FlashcardTopicModel) {
-        TODO("Not yet implemented")
+        // Get reference from map for topic to update
+        var topicToUpdate = flashcardMap.keys.find { p -> p.topicId == topic.topicId }
+        // Temporary store content (value) of map to updated topic
+        var tempContent = flashcardMap.get(topicToUpdate)
+        if (topicToUpdate != null && tempContent != null) {
+            flashcardMap.remove(topicToUpdate)
+            topicToUpdate.title = topic.title
+            topicToUpdate.description = topic.description
+            flashcardMap.put(topicToUpdate, tempContent)
+            logAll()
+            serialize()
+        }
+
+
     }
 
     override fun deleteTopic(topic: FlashcardTopicModel) {
-        TODO("Not yet implemented")
+        flashcardMap.remove(topic)
+        logAll()
+        serialize()
     }
 
     override fun findAllTopics(): ArrayList<FlashcardTopicModel> {
-        TODO("Not yet implemented")
+        return flashcardMap.keys.toCollection(ArrayList<FlashcardTopicModel>())
     }
 
     override fun setCurrentTopic(topic: FlashcardTopicModel) {
-        TODO("Not yet implemented")
+        workingTopic = topic
     }
 
     override fun getCurrentTopic(): FlashcardTopicModel {
-        TODO("Not yet implemented")
+        return workingTopic
     }
 
     override fun findFlashcardMap(): Map<FlashcardTopicModel, ArrayList<FlashcardModel>> {
-        TODO("Not yet implemented")
+        return flashcardMap
     }
 
     private fun logAll() {

@@ -7,7 +7,7 @@ import java.lang.Exception
 
 fun write (context: Context, fileName: String, data: String) {
     try {
-        val outputStreamWriter = OutputStreamWriter(context.openFileOutput(fileName, Context.MODE_APPEND))
+        val outputStreamWriter = OutputStreamWriter(context.openFileOutput(fileName, Context.MODE_PRIVATE))
         outputStreamWriter.write(data)
         outputStreamWriter.close()
     } catch (ex: Exception) {
@@ -24,7 +24,7 @@ fun read (context: Context, fileName: String): String {
             val bufferedReader = BufferedReader(inputStreamReader)
             val partialStr = StringBuilder()
             var done = false
-            // reaf file content line-by-line
+            // read file content line-by-line
             while (!done) {
                 val line = bufferedReader.readLine()
                 done = (line == null);
