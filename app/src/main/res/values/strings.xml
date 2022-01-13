@@ -28,4 +28,16 @@
     <string name="message_endReached">Reached last flashcard in deck</string>
     <string name="select_image_for_flashcard">Select flashcard image</string>
 
+    <string name="type_resource">Image</string>
+    <string name="hint_Email">E-Mail</string>
+    <string name="hint_Password">Password</string>
+    <string name="btnRegister">Register</string>
+    <string name="btnLogin">Login</string>
+    <string name="info_no_account">Don/t registered yet?</string>
+    <string name="info_already_registered">Already have an account?</string>
+    <string name="headline_login_screen">LOGIN SCREEN</string>
+    <string name="headline_register">REGISTER</string>
+    <string name="text_register">Register</string>
+    <string name="text_login">Login</string>
+
 </resources>
