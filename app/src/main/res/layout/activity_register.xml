@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".firebase.AuthActivity">
+    tools:context=".firebase.LoginActivity">
 
     <FrameLayout
         android:id="@+id/header_auth_image"
@@ -47,7 +47,8 @@
         android:layout_marginTop="35dp"
         app:layout_constraintTop_toBottomOf="@id/registerTextView">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
+            android:id="@+id/emailFieldText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_Email" />
@@ -64,8 +65,10 @@
         android:layout_marginTop="25dp"
         app:layout_constraintTop_toBottomOf="@id/emailField">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
+            android:id="@+id/passwordFieldText"
             android:layout_width="match_parent"
+            android:inputType="textPassword"
             android:layout_height="wrap_content"
             android:hint="@string/hint_Password" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -105,7 +108,7 @@
             android:text="@string/info_already_registered" />
 
         <TextView
-            android:id="@+id/textView_register"
+            android:id="@+id/textView_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

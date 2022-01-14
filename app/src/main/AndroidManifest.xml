@@ -14,7 +14,7 @@
             android:name=".firebase.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".firebase.AuthActivity"
+            android:name=".firebase.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

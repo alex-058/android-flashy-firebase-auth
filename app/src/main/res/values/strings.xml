@@ -39,5 +39,8 @@
     <string name="headline_register">REGISTER</string>
     <string name="text_register">Register</string>
     <string name="text_login">Login</string>
+    <string name="message_enterEmail">Please enter e-mail</string>
+    <string name="message_enterPassword">Please enter password</string>
+    <string name="status_user_login">No user logged in</string>
 
 </resources>
