@@ -20,9 +20,9 @@
                 android:id="@+id/toolbarSplashScreen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/purple_500"
+                android:background="@color/green_500"
                 android:minHeight="?attr/actionBarSize"
-                android:theme="?attr/actionBarTheme" />
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewFlashcardTopics"

@@ -45,6 +45,7 @@ class SplashScreenActivity : AppCompatActivity(), FlashcardTopicAdapter.Flashcar
         toggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.toolbarSplashScreen.title = resources.getString(R.string.title_splashScreen)
 
         // Initialize recycler view / adpater
         val layoutManager = GridLayoutManager(applicationContext, 2)
