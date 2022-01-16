@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.navigation.NavigationView
@@ -54,7 +55,8 @@ class SplashScreenActivity : AppCompatActivity(), FlashcardTopicAdapter.Flashcar
         binding.navView.setNavigationItemSelectedListener {
             when(it.itemId) {
                 R.id.nav_home -> {
-                    Toast.makeText(this, "You have selected home", Toast.LENGTH_LONG).show()
+                    // Fade out navigation view
+                    binding.root.closeDrawer(GravityCompat.START)
                 }
 
                 R.id.nav_add ->  {
