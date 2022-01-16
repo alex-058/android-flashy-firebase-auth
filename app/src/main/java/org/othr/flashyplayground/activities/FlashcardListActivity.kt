@@ -75,7 +75,7 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
                 refreshListIntentLauncher.launch(launcherIntent)
             }
             R.id.home -> {
-                val launcherIntent = Intent(this, FlashcardTopicListActivity::class.java)
+                val launcherIntent = Intent(this, SplashScreenActivity::class.java)
                 refreshListIntentLauncher.launch(launcherIntent)
             }
         }

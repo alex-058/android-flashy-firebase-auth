@@ -67,7 +67,7 @@ class FlashcardTopicActivity : AppCompatActivity() {
 
             // Always launch back list activity after adding / updating the topic
 
-            var laucherIntent = Intent(applicationContext, FlashcardTopicListActivity::class.java)
+            var laucherIntent = Intent(applicationContext, SplashScreenActivity::class.java)
             startActivity(laucherIntent)
 
         }
@@ -82,7 +82,7 @@ class FlashcardTopicActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.menu_topic_delete -> {
                 app.flashcards.deleteTopic(aTopic.copy())
-                val launcherIntent = Intent(this, FlashcardTopicListActivity::class.java)
+                val launcherIntent = Intent(this, SplashScreenActivity::class.java)
                 startActivity(launcherIntent)
             }
         }
