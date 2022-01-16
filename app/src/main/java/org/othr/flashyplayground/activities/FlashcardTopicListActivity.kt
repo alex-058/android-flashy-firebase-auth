@@ -43,6 +43,7 @@ class FlashcardTopicListActivity : AppCompatActivity(), FlashcardTopicAdapter.Fl
         binding.toolbarFlashcardTopics.title = title
         setSupportActionBar(binding.toolbarFlashcardTopics)
 
+
         // Event handling for topic add button
         binding.topicAddBttn.setOnClickListener {
             // launch FlashcardTopicActivity

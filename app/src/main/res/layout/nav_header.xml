@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="16dp"
+    android:layout_marginStart="16dp"
+    android:background="@color/white">
+
+    <!--Linear layout text views are automatically below each other (orientation = vertical) -->
+    <!--No constraints needed therefore-->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_name"
+        android:paddingTop="8dp"
+        android:textSize="20sp"
+        android:text="User Name"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/email"
+        android:textSize="16sp"
+        android:text="test@test.de"/>
+
+    <!--Separator line for header -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/grey" />
+
+</LinearLayout>
