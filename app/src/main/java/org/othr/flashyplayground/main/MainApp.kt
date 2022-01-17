@@ -6,12 +6,14 @@ import org.othr.flashyplayground.model.*
 class MainApp : Application() {
 
     lateinit var flashcards: FlashcardTopicStore
+    lateinit var currentUser: FlashyUser
 
     // Flashcards for testing
 
     override fun onCreate() {
 
         super.onCreate()
+        currentUser = FlashyUser()
         flashcards = FlashcardJSONStore(applicationContext)
 
         /*

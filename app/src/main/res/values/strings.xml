@@ -36,6 +36,8 @@
     <string name="nav_title_about">About</string>
     <string name="nav_heading_profile">Profile</string>
     <string name="nav_title_login">Login</string>
+    <string name="nav_title_logout">Sign out</string>
+    <string name="nav_title_emailUser">User</string>
 
     <string name="type_resource">Image</string>
     <string name="hint_Email">E-Mail</string>
