@@ -14,6 +14,7 @@ import org.othr.flashyplayground.databinding.ActivityFlashcardListBinding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.othr.flashyplayground.adapter.FlashcardAdapter
+import org.othr.flashyplayground.adapter.FlashcardTopicAdapter
 import org.othr.flashyplayground.main.MainApp
 import org.othr.flashyplayground.model.FlashcardModel
 
@@ -119,6 +120,7 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
         refreshListIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 // Toast.makeText(this, "You just came back from an activity to the flashcard list view", Toast.LENGTH_SHORT).show()
+                binding.recyclerViewFlashcards.adapter = FlashcardAdapter(app.flashcards.findAllFlashcards(), this)
                 binding.recyclerViewFlashcards.adapter?.notifyDataSetChanged()
             }
     }

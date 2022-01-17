@@ -12,11 +12,14 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import org.othr.flashyplayground.R
 import org.othr.flashyplayground.adapter.FlashcardTopicAdapter
 import org.othr.flashyplayground.databinding.ActivitySplashScreenBinding
+import org.othr.flashyplayground.firebase.LoginActivity
 import org.othr.flashyplayground.main.MainApp
 import org.othr.flashyplayground.model.FlashcardTopicModel
+import org.othr.flashyplayground.model.FlashyUser
 
 class SplashScreenActivity : AppCompatActivity(), FlashcardTopicAdapter.FlashcardTopicListener {
 
@@ -65,9 +68,50 @@ class SplashScreenActivity : AppCompatActivity(), FlashcardTopicAdapter.Flashcar
                     val launcherIntent = Intent(this, FlashcardTopicActivity::class.java)
                     refreshTopicListIntentLauncher.launch(launcherIntent)
                 }
-            }
 
+                R.id.nav_login -> {
+                    val loginIntent = Intent(this, LoginActivity::class.java)
+                    startActivity(loginIntent)
+                }
+
+                R.id.nav_logout -> {
+                    // sign out current user from Firebase
+                    FirebaseAuth.getInstance().signOut();
+
+                    Toast.makeText(this, "You were signed out successfully", Toast.LENGTH_LONG).show()
+
+                    // reset current user object
+                    app.currentUser = FlashyUser()
+
+                    // re-launch activity to reset login progress
+                    intent = Intent(this, SplashScreenActivity::class.java)
+                    refreshTopicListIntentLauncher.launch(intent)
+
+                }
+            }
+            // Close drawer every time a menu item got called
+            binding.root.closeDrawer(GravityCompat.START)
             true
+        }
+
+        // login / registering event handling
+        if (intent.hasExtra("email_id") && intent.hasExtra("user_id")) {
+            // Retrieve login / registering data
+            app.currentUser.email = intent.extras?.getString("email_id")!!
+            app.currentUser.userId = intent.extras?.getString("user_id")!!
+            Toast.makeText(this, "Logged-in user: ${app.currentUser.email} with user_id: ${app.currentUser.userId}", Toast.LENGTH_LONG).show()
+        }
+
+        // check if user is already logged in when coming back from another activity
+        if (app.currentUser.email.isNotEmpty() && app.currentUser.userId.isNotEmpty()) {
+
+            // disable nav_login -> enable nav_logout
+            binding.navView.menu.findItem(R.id.nav_login).setVisible(false)
+            binding.navView.menu.findItem(R.id.nav_logout).setVisible(true)
+
+            // set new credentials in login navigation view area
+            binding.navView.menu.findItem(R.id.nav_emailUser).setVisible(true)
+            binding.navView.menu.findItem(R.id.nav_emailUser).title = app.currentUser.email
         }
 
         registerTopicRefreshCallback()
@@ -112,7 +156,7 @@ class SplashScreenActivity : AppCompatActivity(), FlashcardTopicAdapter.Flashcar
         refreshTopicListIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 Toast.makeText(this, "You just came back from an activity to the flashcard topic list view", Toast.LENGTH_SHORT).show()
-                // binding.recyclerViewFlashcardTopics.adapter = FlashcardTopicAdapter(app.flashcards.findAllTopics(), this)
+                binding.recyclerViewFlashcardTopics.adapter = FlashcardTopicAdapter(app.flashcards.findAllTopics(), this)
                 binding.recyclerViewFlashcardTopics.adapter?.notifyDataSetChanged()
             }
     }
