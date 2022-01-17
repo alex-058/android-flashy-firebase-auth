@@ -20,9 +20,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.FlashcardTopicActivity"
+            android:name=".firebase.LoginActivity"
             android:exported="false" />
-
+        <activity
+            android:name=".firebase.RegisterActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.FlashcardLearnActivity"
             android:exported="true" />
@@ -31,6 +33,9 @@
             android:exported="true" />
         <activity
             android:name=".activities.FlashcardActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.FlashcardTopicActivity"
             android:exported="true" />
     </application>
 

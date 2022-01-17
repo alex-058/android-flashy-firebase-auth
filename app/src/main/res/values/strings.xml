@@ -37,4 +37,19 @@
     <string name="nav_heading_profile">Profile</string>
     <string name="nav_title_login">Login</string>
 
+    <string name="type_resource">Image</string>
+    <string name="hint_Email">E-Mail</string>
+    <string name="hint_Password">Password</string>
+    <string name="btnRegister">Register</string>
+    <string name="btnLogin">Login</string>
+    <string name="info_no_account">Don/t registered yet?</string>
+    <string name="info_already_registered">Already have an account?</string>
+    <string name="headline_login_screen">LOGIN SCREEN</string>
+    <string name="headline_register">REGISTER</string>
+    <string name="text_register">Register</string>
+    <string name="text_login">Login</string>
+    <string name="message_enterEmail">Please enter e-mail</string>
+    <string name="message_enterPassword">Please enter password</string>
+    <string name="status_user_login">No user logged in</string>
+
 </resources>

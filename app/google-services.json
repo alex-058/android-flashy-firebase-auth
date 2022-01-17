@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "274880284930",
+    "project_id": "oth-kotlin-flashy-auth",
+    "storage_bucket": "oth-kotlin-flashy-auth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:274880284930:android:54a8d46b2191bae4cf5a1b",
+        "android_client_info": {
+          "package_name": "org.othr.flashyplayground"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "274880284930-ql07jhhqfovvlr3n22144lfoo2ii6mkl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.othr.flashyplayground.firebase",
+            "certificate_hash": "2b2c1789a216133ddc4a3997535660b46d20a549"
+          }
+        },
+        {
+          "client_id": "274880284930-togreihqvtif6ogf82rik793qrbv92f7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYP8OfFoJVBJcZdiZ5wlp0adSeB6nbCq4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "274880284930-togreihqvtif6ogf82rik793qrbv92f7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
