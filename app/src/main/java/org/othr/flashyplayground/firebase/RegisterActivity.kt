@@ -70,8 +70,8 @@ class RegisterActivity : AppCompatActivity() {
                                      * More interesting for login activity I guess
                                      */
 
-                                    val intent = Intent(this@RegisterActivity, FlashcardTopicListActivity::class.java)
-                                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                    val intent = Intent(this, FlashcardTopicListActivity::class.java)
+                                    // intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                     intent.putExtra("user_id", firebaseUser.uid)
                                     intent.putExtra("email_id", email)
                                     startActivity(intent)
@@ -85,7 +85,7 @@ class RegisterActivity : AppCompatActivity() {
                                         task.exception!!.message.toString(),
                                         Toast.LENGTH_SHORT
                                     ).show()
-                            }
+                                }
                             })
                 }
 
