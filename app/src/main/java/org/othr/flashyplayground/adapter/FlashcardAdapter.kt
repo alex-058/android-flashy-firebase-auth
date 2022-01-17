@@ -10,7 +10,7 @@ class FlashcardAdapter (private var flashcards: ArrayList<FlashcardModel>, priva
 
     // Introduce Listener Interface for clicking on certain elements in the reclycler view
     interface FlashcardListener {
-        fun onFlashcardItemClick(flashcard: FlashcardModel)
+        fun onFlashcardItemClickLong(flashcard: FlashcardModel)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
@@ -32,7 +32,10 @@ class FlashcardAdapter (private var flashcards: ArrayList<FlashcardModel>, priva
 
         fun bind (flashcard: FlashcardModel, listener: FlashcardListener) {
             binding.flashcardFrontContent.text = flashcard.front
-            binding.root.setOnClickListener { listener.onFlashcardItemClick(flashcard) }
+            binding.root.setOnLongClickListener(){
+                listener.onFlashcardItemClickLong(flashcard)
+                true
+            }
         }
     }
 

@@ -11,10 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FlashyPlayground">
         <activity
-            android:name=".activities.FlashcardLearnActivity"
-            android:exported="true" />
-        <activity
-            android:name=".activities.FlashcardListActivity"
+            android:name=".activities.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +20,22 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".firebase.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".firebase.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.FlashcardLearnActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.FlashcardListActivity"
+            android:exported="true" />
+        <activity
             android:name=".activities.FlashcardActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.FlashcardTopicActivity"
             android:exported="true" />
     </application>
 

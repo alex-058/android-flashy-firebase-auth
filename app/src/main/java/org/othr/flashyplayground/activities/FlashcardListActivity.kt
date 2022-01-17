@@ -8,17 +8,20 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.recyclerview.widget.ItemTouchHelper
 import org.othr.flashyplayground.R
 import org.othr.flashyplayground.databinding.ActivityFlashcardListBinding
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.othr.flashyplayground.adapter.FlashcardAdapter
+import org.othr.flashyplayground.adapter.FlashcardTopicAdapter
 import org.othr.flashyplayground.main.MainApp
 import org.othr.flashyplayground.model.FlashcardModel
 
 class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardListener {
 
     private lateinit var binding: ActivityFlashcardListBinding
-    lateinit var app : MainApp
+    lateinit var app: MainApp
 
     // Launcher
     private lateinit var refreshListIntentLauncher: ActivityResultLauncher<Intent>
@@ -33,17 +36,26 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
         // Initialization of MainApp
         app = application as MainApp
 
-
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerViewFlashcards.layoutManager = layoutManager
-        binding.recyclerViewFlashcards.adapter = FlashcardAdapter(app.flashcards.findAll(), this)
+        binding.recyclerViewFlashcards.adapter = FlashcardAdapter(app.flashcards.findAllFlashcards(), this)
 
         // Setup toolbar for add functionality (Actionbar)
-        binding.toolbar.title = title
+        binding.toolbar.title = app.flashcards.getCurrentTopic().title
         setSupportActionBar(binding.toolbar)
 
+        // Event handling for flashcard add buttong
+        binding.flashcardAddBttn.setOnClickListener {
+            // launch FlashcardActivity
+            val launcherIntent = Intent(this, FlashcardActivity::class.java)
+            refreshListIntentLauncher.launch(launcherIntent)
+        }
+
+        // Attach TouchHelper (Swiping Functionality) to recycler view
+        ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding.recyclerViewFlashcards)
+
         // Trigger callback methods
-        registerRefreshCallback()
+        registerListRefreshCallback()
 
     }
 
@@ -60,12 +72,11 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
                 // Toast.makeText(applicationContext, "Starting Learn Activity", Toast.LENGTH_LONG).show()
                 val launcherIntent = Intent(this, FlashcardLearnActivity::class.java)
                 // pass in the flashcards array list (stack) needed for learning activity
-                launcherIntent.putParcelableArrayListExtra("learn" , app.flashcards.findAll())
+                launcherIntent.putParcelableArrayListExtra("learn" , app.flashcards.findAllFlashcards())
                 refreshListIntentLauncher.launch(launcherIntent)
             }
-            R.id.add_item -> {
-                // launch FlashcardActivity
-                val launcherIntent = Intent(this, FlashcardActivity::class.java)
+            R.id.home -> {
+                val launcherIntent = Intent(this, SplashScreenActivity::class.java)
                 refreshListIntentLauncher.launch(launcherIntent)
             }
         }
@@ -74,11 +85,30 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
     }
 
     // event handling when clicking certain row / item in recycler view (list)
-    override fun onFlashcardItemClick(flashcard: FlashcardModel) {
+    override fun onFlashcardItemClickLong(flashcard: FlashcardModel) {
         // Toast.makeText(applicationContext, "You just clicked a flashcard", Toast.LENGTH_LONG).show()
         val launcherIntent = Intent(this, FlashcardActivity::class.java)
         launcherIntent.putExtra("edit_flashcard", flashcard)
         refreshListIntentLauncher.launch(launcherIntent)
+    }
+
+    // item touch helper property to implement swipe feature for deletion
+    val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+        // onMove not needed -> default implementation
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return true
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            app.flashcards.deleteFlashcard(viewHolder.adapterPosition)
+            // notify recycler view that item has been removed
+            binding.recyclerViewFlashcards.adapter?.notifyItemRemoved(viewHolder.adapterPosition)
+        }
+
     }
 
     /**
@@ -86,10 +116,11 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
      * Forces Flashcard list View to refresh itself when coming back from an activity
      */
 
-    private fun registerRefreshCallback() {
+    private fun registerListRefreshCallback() {
         refreshListIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 // Toast.makeText(this, "You just came back from an activity to the flashcard list view", Toast.LENGTH_SHORT).show()
+                binding.recyclerViewFlashcards.adapter = FlashcardAdapter(app.flashcards.findAllFlashcards(), this)
                 binding.recyclerViewFlashcards.adapter?.notifyDataSetChanged()
             }
     }

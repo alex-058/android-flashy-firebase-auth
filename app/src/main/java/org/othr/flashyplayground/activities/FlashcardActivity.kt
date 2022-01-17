@@ -19,6 +19,7 @@ import org.othr.flashyplayground.R
 import timber.log.Timber
 import org.othr.flashyplayground.helpers.*
 import com.squareup.picasso.Picasso
+import org.othr.flashyplayground.model.FlashcardTopicModel
 import java.net.URI
 
 class FlashcardActivity : AppCompatActivity() {
@@ -27,6 +28,8 @@ class FlashcardActivity : AppCompatActivity() {
 
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
     var aFlashcard = FlashcardModel()
+
+    lateinit var topic: FlashcardTopicModel
 
     // Declaration of MainApp
     lateinit var app :  MainApp
@@ -73,14 +76,14 @@ class FlashcardActivity : AppCompatActivity() {
 
                 if (edit == false) {
                     // Add new flashcard to list
-                    app.flashcards.create(aFlashcard.copy())
+                    app.flashcards.addFlashcard(aFlashcard.copy())
                     Snackbar
                         .make(it, R.string.message_addedFlashcard, Snackbar.LENGTH_LONG)
                         .show()
                 }
                 else {
                     // Update existing flashcard
-                    app.flashcards.update(aFlashcard.copy())
+                    app.flashcards.updateFlashcard(aFlashcard.copy())
                     Snackbar
                         .make(it, R.string.message_updatedFlashcard, Snackbar.LENGTH_LONG)
                         .show()

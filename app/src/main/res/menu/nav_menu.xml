@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <!--Tools are needed to directly show how our nav view looks like -->
+
+    <!--All the items that should display in the nav drawer -->
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="@string/nav_title_home"/>
+    <item
+        android:id="@+id/nav_add"
+        android:icon="@drawable/ic_baseline_add_24"
+        android:title="@string/nav_title_add" />
+
+    <item
+        android:id="@+id/nav_explore"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="@string/nav_title_explore" />
+
+    <item
+        android:id="@+id/nav_info"
+        android:icon="@drawable/ic_baseline_info_24"
+        android:title="@string/nav_title_about"/>
+
+    <!-- Profile item with sub elements  -->
+
+    <item android:title="@string/nav_heading_profile">
+        <menu>
+            <item
+                android:id="@+id/nav_login"
+                android:icon="@drawable/ic_baseline_login_24"
+                android:title="@string/nav_title_login"/>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_baseline_login_24"
+                android:title="@string/nav_title_logout"
+                android:visible="false"/>
+            <item
+                android:id="@+id/nav_emailUser"
+                android:title="@string/nav_title_emailUser"
+                android:visible="false" />
+        </menu>
+    </item>
+
+</menu>

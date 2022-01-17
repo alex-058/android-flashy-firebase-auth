@@ -1,17 +1,25 @@
 <resources>
-    <string name="app_name">FlashyPlayground</string>
+    <string name="app_name">Flashy</string>
+    <string name="title_splashScreen">Flashy Learning</string>
     <string name="hint_frontFlashcardContent">What is your question?</string>
     <string name="hint_backFlashcardContent">And your answer here</string>
+    <string name="hint_topicDescriptionContent">Description of the flashcard deck</string>
+    <string name="hint_topicTitleContent">Title of the flashcard deck</string>
     <string name="btn_addFlashcard">Add Flashcard</string>
+    <string name="btn_addTopic">Add Topic</string>
     <string name="btn_addImage">Add Image</string>
     <string name="btn_flipFlashcard">Flip Flashcard</string>
     <string name="btn_changeFlashcard">Save Changes</string>
     <string name="btnBack">Back</string>
     <string name="btnNext">Next</string>
     <string name="menu_addFlashcard">Add</string>
+    <string name="menu_addTopic">Add Topic</string>
     <string name="menu_cancelButton">Cancel</string>
     <string name="menu_startLearning">Start</string>
+    <string name="menu_deleteTopic">Delete Topic</string>
+    <string name="menu_Home">Home</string>
     <string name="message_addedFlashcard">Flashcard added</string>
+    <string name="message_addedTopic">Topic added</string>
     <string name="message_canceled">Canceled</string>
     <string name="message_updatedFlashcard">Flashcard updated</string>
     <string name="message_discardedAddFlashcard">Flashcard not added. Please enter front/back content.</string>
@@ -20,5 +28,30 @@
     <string name="message_beginningReached">First flashcard in deck</string>
     <string name="message_endReached">Reached last flashcard in deck</string>
     <string name="select_image_for_flashcard">Select flashcard image</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="nav_title_home">Home</string>
+    <string name="nav_title_add">Add Topic</string>
+    <string name="nav_title_explore">Explore</string>
+    <string name="nav_title_about">About</string>
+    <string name="nav_heading_profile">Profile</string>
+    <string name="nav_title_login">Login</string>
+    <string name="nav_title_logout">Sign out</string>
+    <string name="nav_title_emailUser">User</string>
+
+    <string name="type_resource">Image</string>
+    <string name="hint_Email">E-Mail</string>
+    <string name="hint_Password">Password</string>
+    <string name="btnRegister">Register</string>
+    <string name="btnLogin">Login</string>
+    <string name="info_no_account">Don/t registered yet?</string>
+    <string name="info_already_registered">Already have an account?</string>
+    <string name="headline_login_screen">LOGIN SCREEN</string>
+    <string name="headline_register">REGISTER</string>
+    <string name="text_register">Register</string>
+    <string name="text_login">Login</string>
+    <string name="message_enterEmail">Please enter e-mail</string>
+    <string name="message_enterPassword">Please enter password</string>
+    <string name="status_user_login">No user logged in</string>
 
 </resources>
