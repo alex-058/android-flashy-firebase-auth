@@ -1,25 +1,21 @@
 package org.othr.flashyplayground.activities
 
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.ProgressBar
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import com.squareup.picasso.Picasso
 import org.othr.flashyplayground.R
-import org.othr.flashyplayground.adapter.FlashcardAdapter
 import org.othr.flashyplayground.databinding.ActivityFlashcardLearnBinding
-import org.othr.flashyplayground.model.FlashcardModel
+import org.othr.flashyplayground.main.MainApp
 
 class FlashcardLearnActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFlashcardLearnBinding
-    private lateinit var flashcardDeck: ArrayList<FlashcardModel>
+    lateinit var app: MainApp
 
     private lateinit var continueLearnIntentLauncher: ActivityResultLauncher<Intent>
 
@@ -31,19 +27,34 @@ class FlashcardLearnActivity : AppCompatActivity() {
         binding = ActivityFlashcardLearnBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // toolbar support
-        // setSupportActionBar(binding.toolbarFlashcardLearning)
+        // Toolbar
+        setSupportActionBar(binding.toolbarFlashcardLearning)
+        supportActionBar?.title = ""
 
-        // event handling when passing in the flashcard stack
-        if (intent.hasExtra("learn")) {
-            // This is the flashcard stack to learn with
-            flashcardDeck = intent.extras?.getParcelableArrayList<FlashcardModel>("learn")!!
-            // initial flashcard learning
-            flashcardLearning()
-        }
+        // Initialization of MainApp
+        app = application as MainApp
+
+        flashcardLearning()
 
         // trigger callback methods
         registerLearnIntentLauncher()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_flashcard_learn, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    // event handling for items in toolbar
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.stopLearning -> {
+                val launcherIntent = Intent(this, FlashcardLearnSummaryActivity::class.java)
+                startActivity(launcherIntent)
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     /**
@@ -52,19 +63,19 @@ class FlashcardLearnActivity : AppCompatActivity() {
     private fun flashcardLearning () {
 
         // set flashcard
-        var currentFlashcard = flashcardDeck[currentPosition]
+        var currentFlashcard = app.flashcards.findAllFlashcards()[currentPosition]
 
         // initialize progress bar
-        binding.progressBar.max = flashcardDeck.size
+        binding.progressBar.max = app.flashcards.findAllFlashcards().size
         binding.progressBar.progress = currentPosition+1
 
         // display flashcard
         binding.learnQuestionFront.text = currentFlashcard.front
 
         binding.btnNextFlashcardLearning.setOnClickListener {
-            if (currentPosition < flashcardDeck.size - 1) {
+            if (currentPosition < app.flashcards.findAllFlashcards().size - 1) {
                 currentPosition++
-                currentFlashcard = flashcardDeck[currentPosition]
+                currentFlashcard = app.flashcards.findAllFlashcards()[currentPosition]
                 binding.progressBar.progress = currentPosition + 1
                 binding.learnQuestionFront.text = currentFlashcard.front
             }
@@ -76,7 +87,7 @@ class FlashcardLearnActivity : AppCompatActivity() {
         binding.btnBackFlashcardLearning.setOnClickListener {
             if (currentPosition > 0) {
                 currentPosition--
-                currentFlashcard = flashcardDeck[currentPosition]
+                currentFlashcard = app.flashcards.findAllFlashcards()[currentPosition]
                 binding.progressBar.progress = currentPosition + 1
                 binding.learnQuestionFront.text = currentFlashcard.front
             }
@@ -87,8 +98,7 @@ class FlashcardLearnActivity : AppCompatActivity() {
 
         binding.btnFlipFlashcardFront.setOnClickListener {
             intent = Intent(this, FlashcardLearnBackActivity::class.java)
-            // this is all it has to deal with
-            intent.putExtra("current_flashcard", currentFlashcard)
+            intent.putExtra("current_flashcard_position", currentPosition)
             continueLearnIntentLauncher.launch(intent)
         }
 
@@ -99,10 +109,16 @@ class FlashcardLearnActivity : AppCompatActivity() {
         continueLearnIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 Toast.makeText(this, "You just came back from the back of the flashcards", Toast.LENGTH_SHORT).show()
-                if (currentPosition < flashcardDeck.size - 1) {
+                // if end is not reached
+                if (currentPosition < app.flashcards.findAllFlashcards().size - 1) {
                     currentPosition++
+                    flashcardLearning()
                 }
-                flashcardLearning()
+                else { // end reached -> send to summary activity
+                    intent = Intent(this, FlashcardLearnSummaryActivity::class.java)
+                    startActivity(intent)
+                }
+
 
             }
     }

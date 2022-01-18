@@ -80,7 +80,12 @@ class FlashcardActivity : AppCompatActivity() {
                     Snackbar
                         .make(it, R.string.message_addedFlashcard, Snackbar.LENGTH_LONG)
                         .show()
+
+                    // reset current flashcard an image to add new items
+                    aFlashcard = FlashcardModel()
+                    binding.imageViewAddFlashcard.visibility = View.GONE
                 }
+
                 else {
                     // Update existing flashcard
                     app.flashcards.updateFlashcard(aFlashcard.copy())
@@ -93,9 +98,7 @@ class FlashcardActivity : AppCompatActivity() {
                 // Request focus operations and hide if present
                 binding.flashcardFront.text.clear()
                 binding.flashcardBack.text.clear()
-                if (aFlashcard.image != Uri.EMPTY) {
-                    binding.imageViewAddFlashcard.visibility = View.GONE
-                }
+
                 // set cursor back to the front
                 binding.flashcardFront.requestFocus()
 

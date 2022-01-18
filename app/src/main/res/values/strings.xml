@@ -14,13 +14,14 @@
     <string name="btnNext">Next</string>
     <string name="btnLearnEasy">Easy</string>
     <string name="btnLearnGood">Good</string>
-    <string name="btnLearnDifficult">Difficult</string>
+    <string name="btnLearnDifficult">Hard</string>
     <string name="menu_addFlashcard">Add</string>
     <string name="menu_addTopic">Add Topic</string>
     <string name="menu_cancelButton">Cancel</string>
     <string name="menu_startLearning">Start</string>
     <string name="menu_deleteTopic">Delete Topic</string>
     <string name="menu_Home">Home</string>
+    <string name="menu_stopLearning">Stop</string>
     <string name="message_addedFlashcard">Flashcard added</string>
     <string name="message_addedTopic">Topic added</string>
     <string name="message_canceled">Canceled</string>

@@ -71,8 +71,6 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
             R.id.start_learn -> {
                 // Toast.makeText(applicationContext, "Starting Learn Activity", Toast.LENGTH_LONG).show()
                 val launcherIntent = Intent(this, FlashcardLearnActivity::class.java)
-                // pass in the flashcards array list (stack) needed for learning activity
-                launcherIntent.putParcelableArrayListExtra("learn" , app.flashcards.findAllFlashcards())
                 refreshListIntentLauncher.launch(launcherIntent)
             }
             R.id.home -> {

@@ -29,7 +29,7 @@ class FlashcardJSONStore(private val context: Context): FlashcardTopicStore {
 
     var flashcardMap =  mutableMapOf<FlashcardTopicModel, ArrayList<FlashcardModel>>()
 
-    // stores topic for current working flashcard deck for convenience reasons
+    // stores topic for current working flashcard deck to make life easier
     lateinit var workingTopic: FlashcardTopicModel
 
     init {

@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FlashyPlayground">
         <activity
+            android:name=".activities.FlashcardLearnSummaryActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.FlashcardLearnBackActivity"
             android:exported="false" />
         <activity
