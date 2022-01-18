@@ -12,6 +12,9 @@
     <string name="btn_changeFlashcard">Save Changes</string>
     <string name="btnBack">Back</string>
     <string name="btnNext">Next</string>
+    <string name="btnLearnEasy">Easy</string>
+    <string name="btnLearnGood">Good</string>
+    <string name="btnLearnDifficult">Difficult</string>
     <string name="menu_addFlashcard">Add</string>
     <string name="menu_addTopic">Add Topic</string>
     <string name="menu_cancelButton">Cancel</string>
