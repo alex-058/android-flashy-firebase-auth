@@ -67,6 +67,10 @@ class FlashcardActivity : AppCompatActivity() {
             binding.btnAdd.setText(R.string.btn_changeFlashcard)
             edit = true
         }
+        else {
+            // set cursor to front input for enhanced user experience
+            binding.flashcardFront.requestFocus()
+        }
 
         binding.btnAdd.setOnClickListener {
             aFlashcard.front = binding.flashcardFront.text.toString()
@@ -81,9 +85,10 @@ class FlashcardActivity : AppCompatActivity() {
                         .make(it, R.string.message_addedFlashcard, Snackbar.LENGTH_LONG)
                         .show()
 
-                    // reset current flashcard an image to add new items
-                    aFlashcard = FlashcardModel()
-                    binding.imageViewAddFlashcard.visibility = View.GONE
+                    // re-launch activity to add new flashcard
+                    val intent = intent
+                    finish()
+                    startActivity(intent)
                 }
 
                 else {
@@ -94,13 +99,6 @@ class FlashcardActivity : AppCompatActivity() {
                         .show()
                     finish()
                 }
-
-                // Request focus operations and hide if present
-                binding.flashcardFront.text.clear()
-                binding.flashcardBack.text.clear()
-
-                // set cursor back to the front
-                binding.flashcardFront.requestFocus()
 
             }
 
@@ -113,7 +111,7 @@ class FlashcardActivity : AppCompatActivity() {
         }
 
         binding.btnAddImage.setOnClickListener {
-            Toast.makeText(applicationContext, "Please select an image", Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext, getString(R.string.message_select_image), Toast.LENGTH_LONG).show()
             showImagePicker(imageIntentLauncher)
         }
 
@@ -163,7 +161,7 @@ class FlashcardActivity : AppCompatActivity() {
                         }
 
                         RESULT_CANCELED -> {
-                            Toast.makeText(applicationContext, "Image not loaded successfully", Toast.LENGTH_LONG).show()
+                            Toast.makeText(applicationContext, getString(R.string.message_image_not_loaded_success), Toast.LENGTH_LONG).show()
                         }
                     }
 

@@ -1,5 +1,6 @@
 package org.othr.flashyplayground.activities
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.ItemTouchHelper
 import org.othr.flashyplayground.R
 import org.othr.flashyplayground.databinding.ActivityFlashcardListBinding
@@ -22,6 +24,8 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
 
     private lateinit var binding: ActivityFlashcardListBinding
     lateinit var app: MainApp
+    // Alert Dialog Builder to confirm deletion of flashcard
+    lateinit var builder: AlertDialog.Builder
 
     // Launcher
     private lateinit var refreshListIntentLauncher: ActivityResultLauncher<Intent>
@@ -35,6 +39,11 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
 
         // Initialization of MainApp
         app = application as MainApp
+
+        // Builder for yes,no dialog when deleting an item in the swipe event
+        builder = AlertDialog.Builder(this@FlashcardListActivity)
+        builder.setTitle(getString(R.string.title_confirm_delete))
+        builder.setMessage(getString(R.string.message_confirm_delete_flashcard))
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerViewFlashcards.layoutManager = layoutManager
@@ -102,9 +111,23 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
         }
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            app.flashcards.deleteFlashcard(viewHolder.adapterPosition)
-            // notify recycler view that item has been removed
-            binding.recyclerViewFlashcards.adapter?.notifyItemRemoved(viewHolder.adapterPosition)
+            // Setup Dialog if deleting a topic
+
+            // yes / no button
+            builder.setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, id ->
+                app.flashcards.deleteFlashcard(viewHolder.adapterPosition)
+                // notify recycler view that item has been removed
+                binding.recyclerViewFlashcards.adapter?.notifyItemRemoved(viewHolder.adapterPosition)
+            })
+
+            builder.setNegativeButton("No", DialogInterface.OnClickListener { dialog, id ->
+                binding.recyclerViewFlashcards.adapter?.notifyDataSetChanged()
+                dialog.cancel()
+            })
+
+            // make dialog happen
+            var alert = builder.create()
+            alert.show()
         }
 
     }

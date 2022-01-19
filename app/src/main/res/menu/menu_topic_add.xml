@@ -2,8 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_topic_delete"
+        android:id="@+id/topic_delete_item"
         android:icon="@drawable/ic_baseline_delete_24"
         android:title="@string/menu_deleteTopic"
-        app:showAsAction="always" />
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/topic_cancel_item"
+        android:title="@string/menu_cancelButton"
+        app:showAsAction="always"/>
+
 </menu>

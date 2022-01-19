@@ -152,10 +152,18 @@ class SplashScreenActivity : AppCompatActivity(), FlashcardTopicAdapter.Flashcar
         }
     }
 
+    /**
+     * Prevent app to close if back button is pressed
+     */
+    override fun onBackPressed() {
+        // do nothing in splash screen activity
+    }
+
     private fun registerTopicRefreshCallback() {
         refreshTopicListIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                Toast.makeText(this, "You just came back from an activity to the flashcard topic list view", Toast.LENGTH_SHORT).show()
+                // Toast.makeText(this, "You just came back from an activity to the flashcard topic list view", Toast.LENGTH_SHORT).show()
+                // update recycler view
                 binding.recyclerViewFlashcardTopics.adapter = FlashcardTopicAdapter(app.flashcards.findAllTopics(), this)
                 binding.recyclerViewFlashcardTopics.adapter?.notifyDataSetChanged()
             }
