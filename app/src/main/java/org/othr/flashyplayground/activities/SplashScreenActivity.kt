@@ -8,10 +8,9 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import org.othr.flashyplayground.R
 import org.othr.flashyplayground.adapter.FlashcardTopicAdapter
@@ -24,6 +23,7 @@ import org.othr.flashyplayground.model.FlashyUser
 class SplashScreenActivity : AppCompatActivity(), FlashcardTopicAdapter.FlashcardTopicListener {
 
     lateinit var app : MainApp
+    lateinit var builder: AlertDialog.Builder
 
     lateinit var refreshTopicListIntentLauncher: ActivityResultLauncher<Intent>
 
@@ -67,6 +67,17 @@ class SplashScreenActivity : AppCompatActivity(), FlashcardTopicAdapter.Flashcar
                     // launch FlashcardTopicActivity
                     val launcherIntent = Intent(this, FlashcardTopicActivity::class.java)
                     refreshTopicListIntentLauncher.launch(launcherIntent)
+                }
+
+                R.id.nav_info -> {
+                    // Builder for info dialog in "about" nav view item
+                    builder = AlertDialog.Builder(this@SplashScreenActivity)
+                    builder.setTitle(getString(R.string.message_about_title_app))
+                    builder.setMessage(getString(R.string.message_about_copyright))
+                    // make dialog happen
+                    var alert = builder.create()
+                    alert.show()
+
                 }
 
                 R.id.nav_login -> {
@@ -152,10 +163,18 @@ class SplashScreenActivity : AppCompatActivity(), FlashcardTopicAdapter.Flashcar
         }
     }
 
+    /**
+     * Prevent app to close if back button is pressed
+     */
+    override fun onBackPressed() {
+        // do nothing in splash screen activity
+    }
+
     private fun registerTopicRefreshCallback() {
         refreshTopicListIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                Toast.makeText(this, "You just came back from an activity to the flashcard topic list view", Toast.LENGTH_SHORT).show()
+                // Toast.makeText(this, "You just came back from an activity to the flashcard topic list view", Toast.LENGTH_SHORT).show()
+                // update recycler view
                 binding.recyclerViewFlashcardTopics.adapter = FlashcardTopicAdapter(app.flashcards.findAllTopics(), this)
                 binding.recyclerViewFlashcardTopics.adapter?.notifyDataSetChanged()
             }

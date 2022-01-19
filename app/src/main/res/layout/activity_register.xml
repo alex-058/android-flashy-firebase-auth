@@ -89,6 +89,7 @@
         android:backgroundTint="@color/light_green"/>
 
     <LinearLayout
+        android:id="@+id/linearLayoutLoginPrompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -117,6 +118,18 @@
             android:text="@string/text_login"
             android:textStyle="bold"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewRegisterCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutLoginPrompt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_weight="1"
+        android:padding="5dp"
+        android:layout_marginTop="14dp"
+        android:text="@string/text_clickable_cancel"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

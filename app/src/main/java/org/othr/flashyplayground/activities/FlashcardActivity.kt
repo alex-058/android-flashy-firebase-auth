@@ -40,6 +40,7 @@ class FlashcardActivity : AppCompatActivity() {
         Timber.plant(Timber.DebugTree())
 
         super.onCreate(savedInstanceState)
+
         // Binding Support
         binding = ActivityFlashcardAddBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -60,12 +61,17 @@ class FlashcardActivity : AppCompatActivity() {
             // Set text flashcard text fields in order to allow user to edit text of existing flashcards
             Picasso.get()
                 .load(aFlashcard.image)
+                .resize(800, 600)
                 .into(binding.imageViewAddFlashcard)
             binding.flashcardBack.setText(aFlashcard.back)
             binding.flashcardFront.setText(aFlashcard.front)
             // Set new toolbar title
             binding.btnAdd.setText(R.string.btn_changeFlashcard)
             edit = true
+        }
+        else {
+            // set cursor to front input to continue adding flashcards in order to improve user experience
+            binding.flashcardFront.requestFocus()
         }
 
         binding.btnAdd.setOnClickListener {
@@ -80,7 +86,13 @@ class FlashcardActivity : AppCompatActivity() {
                     Snackbar
                         .make(it, R.string.message_addedFlashcard, Snackbar.LENGTH_LONG)
                         .show()
+
+                    // re-launch activity to add new flashcard
+                    val intent = intent
+                    finish()
+                    startActivity(intent)
                 }
+
                 else {
                     // Update existing flashcard
                     app.flashcards.updateFlashcard(aFlashcard.copy())
@@ -89,15 +101,6 @@ class FlashcardActivity : AppCompatActivity() {
                         .show()
                     finish()
                 }
-
-                // Request focus operations and hide if present
-                binding.flashcardFront.text.clear()
-                binding.flashcardBack.text.clear()
-                if (aFlashcard.image != Uri.EMPTY) {
-                    binding.imageViewAddFlashcard.visibility = View.GONE
-                }
-                // set cursor back to the front
-                binding.flashcardFront.requestFocus()
 
             }
 
@@ -110,7 +113,7 @@ class FlashcardActivity : AppCompatActivity() {
         }
 
         binding.btnAddImage.setOnClickListener {
-            Toast.makeText(applicationContext, "Please select an image", Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext, getString(R.string.message_select_image), Toast.LENGTH_LONG).show()
             showImagePicker(imageIntentLauncher)
         }
 
@@ -155,12 +158,13 @@ class FlashcardActivity : AppCompatActivity() {
                                 // load stored image in image view with Picasso
                                 Picasso.get()
                                     .load(aFlashcard.image)
+                                    .resize(800, 600)
                                     .into(binding.imageViewAddFlashcard)
                             }
                         }
 
                         RESULT_CANCELED -> {
-                            Toast.makeText(applicationContext, "Image not loaded successfully", Toast.LENGTH_LONG).show()
+                            Toast.makeText(applicationContext, getString(R.string.message_image_not_loaded_success), Toast.LENGTH_LONG).show()
                         }
                     }
 

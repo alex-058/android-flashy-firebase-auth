@@ -95,6 +95,16 @@ class RegisterActivity : AppCompatActivity() {
         binding.textViewLogin.setOnClickListener {
             intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+            finish()
         }
+
+        binding.textViewRegisterCancel.setOnClickListener {
+            Toast.makeText(this, R.string.message_canceled, Toast.LENGTH_SHORT).show()
+            intent = Intent(this, SplashScreenActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+
     }
 }

@@ -12,17 +12,22 @@
     <string name="btn_changeFlashcard">Save Changes</string>
     <string name="btnBack">Back</string>
     <string name="btnNext">Next</string>
+    <string name="btnLearnEasy">Easy</string>
+    <string name="btnLearnGood">Good</string>
+    <string name="btnLearnDifficult">Hard</string>
     <string name="menu_addFlashcard">Add</string>
     <string name="menu_addTopic">Add Topic</string>
     <string name="menu_cancelButton">Cancel</string>
     <string name="menu_startLearning">Start</string>
     <string name="menu_deleteTopic">Delete Topic</string>
     <string name="menu_Home">Home</string>
+    <string name="menu_stopLearning">Stop</string>
     <string name="message_addedFlashcard">Flashcard added</string>
     <string name="message_addedTopic">Topic added</string>
     <string name="message_canceled">Canceled</string>
     <string name="message_updatedFlashcard">Flashcard updated</string>
     <string name="message_discardedAddFlashcard">Flashcard not added. Please enter front/back content.</string>
+    <string name="message_discardedAddTopic">Topic not added. Please enter a title.</string>
     <string name="flashcard_question">Flashcard Question</string>
     <string name="flashcard_answer">Answer of flashcard</string>
     <string name="message_beginningReached">First flashcard in deck</string>
@@ -53,5 +58,13 @@
     <string name="message_enterEmail">Please enter e-mail</string>
     <string name="message_enterPassword">Please enter password</string>
     <string name="status_user_login">No user logged in</string>
+    <string name="title_confirm_delete">Confirm delete</string>
+    <string name="message_confirm_delete_topic">Are you sure you want to delete this topic?</string>
+    <string name="message_confirm_delete_flashcard">Are you sure you want to delete this flashcard?</string>
+    <string name="message_image_not_loaded_success">Image not loaded successfully</string>
+    <string name="message_select_image">Please select an image</string>
+    <string name="text_clickable_cancel">Cancel</string>
+    <string name="message_about_title_app">Flashy v1.0</string>
+    <string name="message_about_copyright">Copyright @Alexander Wastl 2022</string>
 
 </resources>
