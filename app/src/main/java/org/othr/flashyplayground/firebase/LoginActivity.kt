@@ -86,5 +86,12 @@ class LoginActivity : AppCompatActivity() {
 
             }
         }
+
+        binding.textViewLoginCancel.setOnClickListener {
+            Toast.makeText(this, R.string.message_canceled, Toast.LENGTH_SHORT).show()
+            val intent = Intent(this@LoginActivity, SplashScreenActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 }
