@@ -48,6 +48,9 @@ class FlashcardTopicActivity : AppCompatActivity() {
         binding.toolbarTopicAdd.title = title
         setSupportActionBar(binding.toolbarTopicAdd)
 
+        // set focus to title
+        binding.topicTitle.requestFocus()
+
         edit = false
 
         if (intent.hasExtra("edit_topic")) {

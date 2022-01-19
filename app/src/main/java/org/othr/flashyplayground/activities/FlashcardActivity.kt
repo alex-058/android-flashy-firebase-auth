@@ -40,6 +40,7 @@ class FlashcardActivity : AppCompatActivity() {
         Timber.plant(Timber.DebugTree())
 
         super.onCreate(savedInstanceState)
+
         // Binding Support
         binding = ActivityFlashcardAddBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -60,6 +61,7 @@ class FlashcardActivity : AppCompatActivity() {
             // Set text flashcard text fields in order to allow user to edit text of existing flashcards
             Picasso.get()
                 .load(aFlashcard.image)
+                .resize(800, 600)
                 .into(binding.imageViewAddFlashcard)
             binding.flashcardBack.setText(aFlashcard.back)
             binding.flashcardFront.setText(aFlashcard.front)
@@ -68,7 +70,7 @@ class FlashcardActivity : AppCompatActivity() {
             edit = true
         }
         else {
-            // set cursor to front input for enhanced user experience
+            // set cursor to front input to continue adding flashcards in order to improve user experience
             binding.flashcardFront.requestFocus()
         }
 
@@ -156,6 +158,7 @@ class FlashcardActivity : AppCompatActivity() {
                                 // load stored image in image view with Picasso
                                 Picasso.get()
                                     .load(aFlashcard.image)
+                                    .resize(800, 600)
                                     .into(binding.imageViewAddFlashcard)
                             }
                         }

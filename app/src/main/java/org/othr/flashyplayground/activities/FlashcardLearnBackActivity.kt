@@ -39,6 +39,7 @@ class FlashcardLearnBackActivity : AppCompatActivity() {
         if (flashcard.image != Uri.EMPTY) {
             Picasso.get()
                 .load(flashcard.image)
+                .resize(800, 600)
                 .into(binding.imageViewFlashcardBack)
             // if there is an image available, show it
             binding.imageViewFlashcardBack.visibility = View.VISIBLE
