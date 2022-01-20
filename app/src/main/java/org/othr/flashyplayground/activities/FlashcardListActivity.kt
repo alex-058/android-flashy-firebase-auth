@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -16,7 +15,6 @@ import org.othr.flashyplayground.databinding.ActivityFlashcardListBinding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.othr.flashyplayground.adapter.FlashcardAdapter
-import org.othr.flashyplayground.adapter.FlashcardTopicAdapter
 import org.othr.flashyplayground.main.MainApp
 import org.othr.flashyplayground.model.FlashcardModel
 
@@ -45,17 +43,18 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
         builder.setTitle(getString(R.string.title_confirm_delete))
         builder.setMessage(getString(R.string.message_confirm_delete_flashcard))
 
+        // Initialize recycler view / adapter
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerViewFlashcards.layoutManager = layoutManager
         binding.recyclerViewFlashcards.adapter = FlashcardAdapter(app.flashcards.findAllFlashcards(), this)
 
-        // Setup toolbar for add functionality (Actionbar)
+        // Setup toolbar for add functionality
         binding.toolbar.title = app.flashcards.getCurrentTopic().title
         setSupportActionBar(binding.toolbar)
 
-        // Event handling for flashcard add buttong
-        binding.flashcardAddBttn.setOnClickListener {
-            // launch FlashcardActivity
+        // Event handling for flashcard add button
+        binding.flashcardAddBtn.setOnClickListener {
+            // Launch FlashcardActivity
             val launcherIntent = Intent(this, FlashcardActivity::class.java)
             refreshListIntentLauncher.launch(launcherIntent)
         }
@@ -99,8 +98,12 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
         refreshListIntentLauncher.launch(launcherIntent)
     }
 
-    // item touch helper property to implement swipe feature for deletion
-    val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+    /**
+     * Item touch helper property to implement swipe feature for deletion of a flashcard
+     * If user swipes item of recycler view (flashcard) to the right, flashcard gets deleted
+     */
+
+    private val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
         // onMove not needed -> default implementation
         override fun onMove(
             recyclerView: RecyclerView,
@@ -110,10 +113,9 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
             return true
         }
 
+        // event handling if user swipes flashcard in recycler view
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             // Setup Dialog if deleting a topic
-
-            // yes / no button
             builder.setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, id ->
                 app.flashcards.deleteFlashcard(viewHolder.adapterPosition)
                 // notify recycler view that item has been removed
@@ -125,8 +127,8 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
                 dialog.cancel()
             })
 
-            // make dialog happen
-            var alert = builder.create()
+            // Show dialog to user
+            val alert = builder.create()
             alert.show()
         }
 
@@ -140,7 +142,6 @@ class FlashcardListActivity : AppCompatActivity(), FlashcardAdapter.FlashcardLis
     private fun registerListRefreshCallback() {
         refreshListIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                // Toast.makeText(this, "You just came back from an activity to the flashcard list view", Toast.LENGTH_SHORT).show()
                 binding.recyclerViewFlashcards.adapter = FlashcardAdapter(app.flashcards.findAllFlashcards(), this)
                 binding.recyclerViewFlashcards.adapter?.notifyDataSetChanged()
             }

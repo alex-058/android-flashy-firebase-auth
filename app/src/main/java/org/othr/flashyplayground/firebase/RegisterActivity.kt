@@ -25,9 +25,9 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.registerButton.setOnClickListener {
-            // check if user has entered something
+            // Check if user has entered something
             when {
-                // cut out empty spaces and check on input
+                // Cut out empty spaces and check on input
                 TextUtils.isEmpty(binding.emailFieldText.text.toString().trim { it <= ' '}) -> {
                     Toast.makeText(
                         this@RegisterActivity,
@@ -42,9 +42,9 @@ class RegisterActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                // if user has entered something in e-mail and password
+                // If user has entered something in e-mail and password
                 else -> {
-                    // get rid of accidentally having empty space in input
+                    // Get rid of accidentally having empty space in input e-mail and password
                     val email: String = binding.emailFieldText.text.toString().trim { it <= ' '}
                     val password: String = binding.passwordFieldText.text.toString().trim { it <= ' '}
 
@@ -67,11 +67,9 @@ class RegisterActivity : AppCompatActivity() {
                                     /**
                                      * Event handling for "logging in" user in Flashy App
                                      * Send back to splash screen and show / update log status
-                                     * More interesting for login activity I guess
                                      */
 
                                     val intent = Intent(this, SplashScreenActivity::class.java)
-                                    // intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                     intent.putExtra("user_id", firebaseUser.uid)
                                     intent.putExtra("email_id", email)
                                     startActivity(intent)
@@ -92,12 +90,14 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
 
+        // Launch login activity
         binding.textViewLogin.setOnClickListener {
             intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
 
+        // Event handling for cancel button
         binding.textViewRegisterCancel.setOnClickListener {
             Toast.makeText(this, R.string.message_canceled, Toast.LENGTH_SHORT).show()
             intent = Intent(this, SplashScreenActivity::class.java)

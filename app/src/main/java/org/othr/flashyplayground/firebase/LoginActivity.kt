@@ -27,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
 
         binding.loginButton.setOnClickListener {
             when {
-                // cut out empty spaces and check on input
+                // Cut out empty spaces and check on input
                 TextUtils.isEmpty(binding.emailFieldText.text.toString().trim { it <= ' '}) -> {
                     Toast.makeText(
                         this@LoginActivity,
@@ -42,9 +42,9 @@ class LoginActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                // if user has entered something in e-mail and password
+                // If user has entered something in e-mail and password
                 else -> {
-                    // get rid of accidentally having empty space in input
+                    // Get rid of accidentally having empty space in input
                     val email: String = binding.emailFieldText.text.toString().trim { it <= ' '}
                     val password: String = binding.passwordFieldText.text.toString().trim { it <= ' '}
 
@@ -87,6 +87,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        // Event handling for cancel button
         binding.textViewLoginCancel.setOnClickListener {
             Toast.makeText(this, R.string.message_canceled, Toast.LENGTH_SHORT).show()
             val intent = Intent(this@LoginActivity, SplashScreenActivity::class.java)

@@ -3,12 +3,10 @@ package org.othr.flashyplayground.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import org.othr.flashyplayground.R
 import org.othr.flashyplayground.databinding.ActivityFlashcardLearnSummaryBinding
 import org.othr.flashyplayground.main.MainApp
 import org.othr.flashyplayground.model.FlashcardModel
 import org.othr.flashyplayground.model.Level
-import java.util.*
 import kotlin.collections.ArrayList
 
 class FlashcardLearnSummaryActivity : AppCompatActivity() {
@@ -30,16 +28,17 @@ class FlashcardLearnSummaryActivity : AppCompatActivity() {
         // Initialization of MainApp
         app = application as MainApp
 
-        // Analyze working deck
+        // Analyze working deck which the user has learned with
         flashcardSummary(app.flashcards.findAllFlashcards())
 
+        // Display learning results
         binding.textNumberEasy.setText(easyCount.toString())
         binding.textNumberGood.setText(goodCount.toString())
         binding.textNumberHard.setText(hardCount.toString())
         binding.textNumberUnknown.setText(notLearnedCount.toString())
 
+        // Reset progress after finishing learning activity
         binding.btnFinishLearning.setOnClickListener {
-            // TODO: reset progress / level of flashcards in working set
             resetProgress(app.flashcards.findAllFlashcards())
             intent = Intent(this, FlashcardListActivity::class.java)
             startActivity(intent)

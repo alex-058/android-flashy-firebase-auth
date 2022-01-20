@@ -1,5 +1,6 @@
 package org.othr.flashyplayground.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,15 +21,21 @@ import org.othr.flashyplayground.main.MainApp
 import org.othr.flashyplayground.model.FlashcardTopicModel
 import org.othr.flashyplayground.model.FlashyUser
 
+/**
+ * Splash screen for flashy app
+ */
+
+@SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity(), FlashcardTopicAdapter.FlashcardTopicListener {
 
     lateinit var app : MainApp
-    lateinit var builder: AlertDialog.Builder
+    private lateinit var builder: AlertDialog.Builder
 
-    lateinit var refreshTopicListIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var refreshTopicListIntentLauncher: ActivityResultLauncher<Intent>
 
-    // Hamburger sign of navigation draw
-    lateinit var toggle : ActionBarDrawerToggle
+    // Hamburger symbol of navigation drawer
+    private lateinit var toggle : ActionBarDrawerToggle
+
     lateinit var binding: ActivitySplashScreenBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +57,7 @@ class SplashScreenActivity : AppCompatActivity(), FlashcardTopicAdapter.Flashcar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.toolbarSplashScreen.title = resources.getString(R.string.title_splashScreen)
 
-        // Initialize recycler view / adpater
+        // Initialize recycler view / adapter
         val layoutManager = GridLayoutManager(applicationContext, 2)
         binding.recyclerViewFlashcardTopics.layoutManager = layoutManager
         binding.recyclerViewFlashcardTopics.adapter = FlashcardTopicAdapter(app.flashcards.findAllTopics(), this)
@@ -64,7 +71,7 @@ class SplashScreenActivity : AppCompatActivity(), FlashcardTopicAdapter.Flashcar
                 }
 
                 R.id.nav_add ->  {
-                    // launch FlashcardTopicActivity
+                    // Launch FlashcardTopicActivity
                     val launcherIntent = Intent(this, FlashcardTopicActivity::class.java)
                     refreshTopicListIntentLauncher.launch(launcherIntent)
                 }
@@ -74,27 +81,28 @@ class SplashScreenActivity : AppCompatActivity(), FlashcardTopicAdapter.Flashcar
                     builder = AlertDialog.Builder(this@SplashScreenActivity)
                     builder.setTitle(getString(R.string.message_about_title_app))
                     builder.setMessage(getString(R.string.message_about_copyright))
-                    // make dialog happen
-                    var alert = builder.create()
+                    // Show dialog
+                    val alert = builder.create()
                     alert.show()
 
                 }
 
                 R.id.nav_login -> {
+                    // Switch to login activity
                     val loginIntent = Intent(this, LoginActivity::class.java)
                     startActivity(loginIntent)
                 }
 
                 R.id.nav_logout -> {
-                    // sign out current user from Firebase
-                    FirebaseAuth.getInstance().signOut();
+                    // Sign out current user from Firebase
+                    FirebaseAuth.getInstance().signOut()
 
                     Toast.makeText(this, "You were signed out successfully", Toast.LENGTH_LONG).show()
 
-                    // reset current user object
+                    // Reset current user object
                     app.currentUser = FlashyUser()
 
-                    // re-launch activity to reset login progress
+                    // Re-launch activity to reset login progress
                     intent = Intent(this, SplashScreenActivity::class.java)
                     refreshTopicListIntentLauncher.launch(intent)
 
@@ -105,22 +113,22 @@ class SplashScreenActivity : AppCompatActivity(), FlashcardTopicAdapter.Flashcar
             true
         }
 
-        // login / registering event handling
+        // Login / registering event handling
         if (intent.hasExtra("email_id") && intent.hasExtra("user_id")) {
             // Retrieve login / registering data
             app.currentUser.email = intent.extras?.getString("email_id")!!
             app.currentUser.userId = intent.extras?.getString("user_id")!!
-            Toast.makeText(this, "Logged-in user: ${app.currentUser.email} with user_id: ${app.currentUser.userId}", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Logged-in user: ${app.currentUser.email}", Toast.LENGTH_LONG).show()
         }
 
-        // check if user is already logged in when coming back from another activity
+        // Check if user is already logged in when coming back from another activity
         if (app.currentUser.email.isNotEmpty() && app.currentUser.userId.isNotEmpty()) {
 
-            // disable nav_login -> enable nav_logout
+            // Disable nav_login -> enable nav_logout
             binding.navView.menu.findItem(R.id.nav_login).setVisible(false)
             binding.navView.menu.findItem(R.id.nav_logout).setVisible(true)
 
-            // set new credentials in login navigation view area
+            // Set new credentials in login navigation view area
             binding.navView.menu.findItem(R.id.nav_emailUser).setVisible(true)
             binding.navView.menu.findItem(R.id.nav_emailUser).title = app.currentUser.email
         }
@@ -154,9 +162,9 @@ class SplashScreenActivity : AppCompatActivity(), FlashcardTopicAdapter.Flashcar
     }
 
     override fun refreshFlashcardCount(topicModel: FlashcardTopicModel): String {
-        var flashcardCount = app.flashcards.findFlashcardMap().get(topicModel)?.size!!
+        val flashcardCount = app.flashcards.findFlashcardMap().get(topicModel)?.size!!
         if (flashcardCount != 1) {
-            return "${flashcardCount.toString()} items"
+            return "$flashcardCount items"
         }
         else {
             return "$flashcardCount item"
@@ -170,6 +178,9 @@ class SplashScreenActivity : AppCompatActivity(), FlashcardTopicAdapter.Flashcar
         // do nothing in splash screen activity
     }
 
+    /**
+     * Callback method to refresh topics in recycler view
+     */
     private fun registerTopicRefreshCallback() {
         refreshTopicListIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {

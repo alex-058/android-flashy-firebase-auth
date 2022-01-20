@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:gravity="left"
+            android:gravity="start"
             tools:text="Topic for flashcard deck" />
 
         <TextView
@@ -27,7 +27,7 @@
             android:layout_below="@id/flashcardTopicTitle"
             android:textSize="18sp"
             android:textColor="@color/grey"
-            android:gravity="left"
+            android:gravity="start"
             tools:text="Amount of flashcards in the deck" />
 
     </RelativeLayout>

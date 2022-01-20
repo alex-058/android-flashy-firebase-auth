@@ -7,6 +7,7 @@ import org.othr.flashyplayground.R
 /**
  * Helper method to launch image picker - will be triggered and coped with in flashcard add activity
  */
+
 fun showImagePicker (intentLauncher: ActivityResultLauncher<Intent>) {
     var file = Intent(Intent.ACTION_OPEN_DOCUMENT)
     file.type = "image/*"

@@ -19,24 +19,25 @@ class FlashcardLearnActivity : AppCompatActivity() {
 
     private lateinit var continueLearnIntentLauncher: ActivityResultLauncher<Intent>
 
+    // Holds current position of learning activity
     private var currentPosition: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Binding Support
         binding = ActivityFlashcardLearnBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Toolbar
+        // Toolbar setup
         setSupportActionBar(binding.toolbarFlashcardLearning)
         supportActionBar?.title = ""
 
         // Initialization of MainApp
         app = application as MainApp
 
+        // Start learning
         flashcardLearning()
 
-        // trigger callback methods
+        // Trigger callback methods
         registerLearnIntentLauncher()
     }
 
@@ -62,16 +63,17 @@ class FlashcardLearnActivity : AppCompatActivity() {
      */
     private fun flashcardLearning () {
 
-        // set flashcard
+        // Set flashcard
         var currentFlashcard = app.flashcards.findAllFlashcards()[currentPosition]
 
-        // initialize progress bar
+        // Initialize progress bar to display progress in flashcard deck
         binding.progressBar.max = app.flashcards.findAllFlashcards().size
         binding.progressBar.progress = currentPosition+1
 
-        // display flashcard
+        // Display flashcard
         binding.learnQuestionFront.text = currentFlashcard.front
 
+        // Event handling button next
         binding.btnNextFlashcardLearning.setOnClickListener {
             if (currentPosition < app.flashcards.findAllFlashcards().size - 1) {
                 currentPosition++
@@ -84,6 +86,7 @@ class FlashcardLearnActivity : AppCompatActivity() {
             }
         }
 
+        // Event handling button back
         binding.btnBackFlashcardLearning.setOnClickListener {
             if (currentPosition > 0) {
                 currentPosition--
@@ -96,6 +99,7 @@ class FlashcardLearnActivity : AppCompatActivity() {
             }
         }
 
+        // Event handling flip flashcard button, launches flashcard back activity and provides current position to get result for particular flashcard
         binding.btnFlipFlashcardFront.setOnClickListener {
             intent = Intent(this, FlashcardLearnBackActivity::class.java)
             intent.putExtra("current_flashcard_position", currentPosition)
@@ -105,10 +109,12 @@ class FlashcardLearnActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Callback method when coming back from flashcard back activity
+     */
     private fun registerLearnIntentLauncher() {
         continueLearnIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                Toast.makeText(this, "You just came back from the back of the flashcards", Toast.LENGTH_SHORT).show()
                 // if end is not reached
                 if (currentPosition < app.flashcards.findAllFlashcards().size - 1) {
                     currentPosition++
@@ -118,7 +124,6 @@ class FlashcardLearnActivity : AppCompatActivity() {
                     intent = Intent(this, FlashcardLearnSummaryActivity::class.java)
                     startActivity(intent)
                 }
-
 
             }
     }

@@ -12,9 +12,6 @@ import org.othr.flashyplayground.helpers.*
 
 const val JSON_FILE = "flashcards.json"
 
-/**
- * TODO: Is the enableComplexMapKeySerialization() needed?
- */
 val gsonBuilder: Gson = GsonBuilder().enableComplexMapKeySerialization()
     .setPrettyPrinting()
     .registerTypeAdapter(Uri::class.java, FlashcardJSONStore.UriParser())
@@ -27,10 +24,10 @@ fun generateRandomId(): Long {
 }
 class FlashcardJSONStore(private val context: Context): FlashcardTopicStore {
 
-    var flashcardMap =  mutableMapOf<FlashcardTopicModel, ArrayList<FlashcardModel>>()
+    private var flashcardMap =  mutableMapOf<FlashcardTopicModel, ArrayList<FlashcardModel>>()
 
     // stores topic for current working flashcard deck to make life easier
-    lateinit var workingTopic: FlashcardTopicModel
+    private lateinit var workingTopic: FlashcardTopicModel
 
     init {
         if (exists(context, JSON_FILE)) {
@@ -121,14 +118,26 @@ class FlashcardJSONStore(private val context: Context): FlashcardTopicStore {
         return workingTopic
     }
 
+    /**
+     * Map operations
+     */
+
     override fun findFlashcardMap(): Map<FlashcardTopicModel, ArrayList<FlashcardModel>> {
         return flashcardMap
     }
+
+    /**
+     * Logging support
+     */
 
     private fun logAll() {
         // log info message
         flashcardMap.forEach { Timber.i(("$it")) }
     }
+
+    /**
+     * Serializing / Deserializing for JSON operations
+     */
 
     private fun serialize() {
         val jsonString = gsonBuilder.toJson(flashcardMap, listType)
@@ -143,6 +152,7 @@ class FlashcardJSONStore(private val context: Context): FlashcardTopicStore {
     /**
      * Required to successfully parse the Uri image property in our flashcard model.
      */
+
     class UriParser : JsonDeserializer<Uri>,JsonSerializer<Uri> {
         override fun deserialize(
             json: JsonElement?,

@@ -2,12 +2,10 @@ package org.othr.flashyplayground.activities
 
 
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,8 +17,6 @@ import org.othr.flashyplayground.R
 import timber.log.Timber
 import org.othr.flashyplayground.helpers.*
 import com.squareup.picasso.Picasso
-import org.othr.flashyplayground.model.FlashcardTopicModel
-import java.net.URI
 
 class FlashcardActivity : AppCompatActivity() {
 
@@ -29,10 +25,11 @@ class FlashcardActivity : AppCompatActivity() {
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
     var aFlashcard = FlashcardModel()
 
-    lateinit var topic: FlashcardTopicModel
-
     // Declaration of MainApp
     lateinit var app :  MainApp
+
+    // Initialize edit flag to check on update / add state (default: false -> add mode)
+    var edit: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -41,15 +38,13 @@ class FlashcardActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
-        // Binding Support
         binding = ActivityFlashcardAddBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Initalization of Main App
         app = application as MainApp
 
-        // Initialize edit flag to check on update / add state (default: false -> add mode)
-        var edit = false // is this the right position to declare this variable?
+        var edit = false
 
         // Toolbar support
         binding.toolbarAdd.title = title
@@ -87,7 +82,7 @@ class FlashcardActivity : AppCompatActivity() {
                         .make(it, R.string.message_addedFlashcard, Snackbar.LENGTH_LONG)
                         .show()
 
-                    // re-launch activity to add new flashcard
+                    // re-launch activity to directly add new flashcard
                     val intent = intent
                     finish()
                     startActivity(intent)
@@ -99,6 +94,7 @@ class FlashcardActivity : AppCompatActivity() {
                     Snackbar
                         .make(it, R.string.message_updatedFlashcard, Snackbar.LENGTH_LONG)
                         .show()
+                    // finish activity after updating
                     finish()
                 }
 
@@ -112,6 +108,7 @@ class FlashcardActivity : AppCompatActivity() {
 
         }
 
+        // event handling for add image button
         binding.btnAddImage.setOnClickListener {
             Toast.makeText(applicationContext, getString(R.string.message_select_image), Toast.LENGTH_LONG).show()
             showImagePicker(imageIntentLauncher)
@@ -127,6 +124,7 @@ class FlashcardActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    // Event handling for toolbar items
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.cancel_item -> {
@@ -141,7 +139,7 @@ class FlashcardActivity : AppCompatActivity() {
     }
 
     /**
-     * Callback methods
+     * Callback method to deal with selected image and display image
      */
 
     private fun registerImageIntentCallback() {

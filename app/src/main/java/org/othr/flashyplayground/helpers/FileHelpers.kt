@@ -5,6 +5,10 @@ import timber.log.Timber
 import java.io.*
 import java.lang.Exception
 
+/**
+ * Helper file to deal with writing to a file, reading from a file and checking if a file exists
+ */
+
 fun write (context: Context, fileName: String, data: String) {
     try {
         val outputStreamWriter = OutputStreamWriter(context.openFileOutput(fileName, Context.MODE_PRIVATE))
@@ -27,16 +31,16 @@ fun read (context: Context, fileName: String): String {
             // read file content line-by-line
             while (!done) {
                 val line = bufferedReader.readLine()
-                done = (line == null);
-                if (line != null) partialStr.append(line);
+                done = (line == null)
+                if (line != null) partialStr.append(line)
             }
             inputStream.close()
             str = partialStr.toString()
         }
     } catch (e: FileNotFoundException) {
-        Timber.e("file not found: %s", e.toString());
+        Timber.e("file not found: %s", e.toString())
     } catch (e: IOException) {
-        Timber.e("cannot read file: %s", e.toString());
+        Timber.e("cannot read file: %s", e.toString())
     }
     return str
 }

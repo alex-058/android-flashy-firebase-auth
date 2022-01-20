@@ -8,7 +8,7 @@ import org.othr.flashyplayground.model.FlashcardModel
 
 class FlashcardAdapter (private var flashcards: ArrayList<FlashcardModel>, private val listener: FlashcardListener) : RecyclerView.Adapter<FlashcardAdapter.MainHolder>() {
 
-    // Introduce Listener Interface for clicking on certain elements in the reclycler view
+    // Introduce Listener Interface for clicking on certain elements in the recycler view
     interface FlashcardListener {
         fun onFlashcardItemClickLong(flashcard: FlashcardModel)
     }
@@ -27,12 +27,12 @@ class FlashcardAdapter (private var flashcards: ArrayList<FlashcardModel>, priva
     override fun getItemCount(): Int = flashcards.size
 
 
-    // operate on the specific rows of the recycler view / RowFlashcardBinding
+    // Operate on the specific row (flashcard) of the recycler view
     class MainHolder (private val binding: RowFlashcardsBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind (flashcard: FlashcardModel, listener: FlashcardListener) {
             binding.flashcardFrontContent.text = flashcard.front
-            binding.root.setOnLongClickListener(){
+            binding.root.setOnLongClickListener {
                 listener.onFlashcardItemClickLong(flashcard)
                 true
             }

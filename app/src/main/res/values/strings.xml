@@ -15,6 +15,7 @@
     <string name="btnLearnEasy">Easy</string>
     <string name="btnLearnGood">Good</string>
     <string name="btnLearnDifficult">Hard</string>
+    <string name="btnFinish">Finish</string>
     <string name="menu_addFlashcard">Add</string>
     <string name="menu_addTopic">Add Topic</string>
     <string name="menu_cancelButton">Cancel</string>
@@ -66,5 +67,12 @@
     <string name="text_clickable_cancel">Cancel</string>
     <string name="message_about_title_app">Flashy v1.0</string>
     <string name="message_about_copyright">Copyright @Alexander Wastl 2022</string>
+    <string name="heading_learning_summary">Learning Summary</string>
+    <string name="text_learning_easy">Easy:</string>
+    <string name="text_learning_good">Good:</string>
+    <string name="text_learning_hard">Hard:</string>
+    <string name="text_not_learned">Not learned:</string>
+    <string name="text_user_name">User Name</string>
+
 
 </resources>

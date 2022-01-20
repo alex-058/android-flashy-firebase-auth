@@ -19,25 +19,6 @@
         android:layout_height="150dp"
         app:srcCompat="@drawable/flashy_logo_simple_text_1" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/user_name"
-        android:paddingTop="8dp"
-        android:visibility="gone"
-        android:textSize="20sp"
-        android:text="User Name"
-        android:textColor="@color/black"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:id="@+id/email"
-        android:textSize="16sp"
-        android:text="test@test.de"/>
-
     <!--Separator line for header -->
     <View
         android:layout_width="match_parent"
