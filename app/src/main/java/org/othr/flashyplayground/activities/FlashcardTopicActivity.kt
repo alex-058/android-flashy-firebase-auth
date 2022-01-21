@@ -25,6 +25,7 @@ class FlashcardTopicActivity : AppCompatActivity() {
     lateinit var app :  MainApp
     // Alert Dialog Builder to confirm deletion of topic
     lateinit var builder: AlertDialog.Builder
+    // Edit mode
     var edit: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +49,7 @@ class FlashcardTopicActivity : AppCompatActivity() {
         binding.toolbarTopicAdd.title = title
         setSupportActionBar(binding.toolbarTopicAdd)
 
-        // set focus to title
+        // Set focus to title to enhance user experience
         binding.topicTitle.requestFocus()
 
         edit = false
@@ -95,7 +96,7 @@ class FlashcardTopicActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_topic_add, menu)
-        // enable / disable delete item with respect to edit mode
+        // enable / disable delete item in toolbar with respect to current edit mode
         if (edit) {
             menu?.findItem(R.id.topic_delete_item)?.setEnabled(true)
         }
@@ -108,7 +109,7 @@ class FlashcardTopicActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.topic_delete_item -> {
-                // yes / no button
+                // show yes / no button as dialog to the user
                 builder.setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, id ->
                     app.flashcards.deleteTopic(aTopic.copy())
                     dialog.cancel() // back to main screen (onResume)
@@ -120,8 +121,8 @@ class FlashcardTopicActivity : AppCompatActivity() {
                     dialog.cancel()
                 })
 
-                // make dialog happen
-                var alert = builder.create()
+                // show dialog
+                val alert = builder.create()
                 alert.show()
 
             }

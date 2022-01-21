@@ -31,7 +31,7 @@
 
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-        android:id="@+id/flashcardAddBttn"
+        android:id="@+id/flashcardAddBtn"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="40dp"

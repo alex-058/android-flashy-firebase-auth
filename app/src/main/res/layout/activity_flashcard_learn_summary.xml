@@ -29,8 +29,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal|center_vertical"
-            android:textSize="18dp"
-            android:text="Learning Summary" />
+            android:textSize="18sp"
+            android:text="@string/heading_learning_summary" />
 
         <TableLayout
             android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:text="Easy: " />
+                    android:text="@string/text_learning_easy" />
 
                 <TextView
                     android:id="@+id/textNumberEasy"
@@ -63,11 +63,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" >
                 <TextView
-                    android:id="@+id/tevelGood"
+                    android:id="@+id/textLevelGood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:text="Good: " />
+                    android:text="@string/text_learning_good" />
 
                 <TextView
                     android:id="@+id/textNumberGood"
@@ -86,7 +86,7 @@
                     android:id="@+id/textLevelHard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hard: "
+                    android:text="@string/text_learning_hard"
                     android:textSize="18sp" />
 
                 <TextView
@@ -107,7 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:text="Not learned: " />
+                    android:text="@string/text_not_learned" />
 
                 <TextView
                     android:id="@+id/textNumberUnknown"
@@ -127,7 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_margin="16dp"
-            android:text="Finish" />
+            android:text="@string/btnFinish" />
 
 
     </LinearLayout>

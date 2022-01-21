@@ -103,6 +103,10 @@ class FlashcardMemStore: FlashcardTopicStore {
         return workingTopic
     }
 
+    /**
+     * Map operations
+     */
+
     override fun findFlashcardMap(): Map<FlashcardTopicModel, ArrayList<FlashcardModel>> {
         return flashcardMap
     }

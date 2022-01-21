@@ -4,7 +4,6 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isVisible
 import com.squareup.picasso.Picasso
 import org.othr.flashyplayground.databinding.ActivityFlashcardLearnBackBinding
 import org.othr.flashyplayground.main.MainApp
@@ -27,7 +26,7 @@ class FlashcardLearnBackActivity : AppCompatActivity() {
         // Initialization of MainApp
         app = application as MainApp
 
-        // get current flashcard from intent
+        // Get current postion from intent and initialize flashcard
         if (intent.hasExtra("current_flashcard_position")) {
             val position = intent.getIntExtra("current_flashcard_position", 1)
             flashcard = app.flashcards.findAllFlashcards()[position]
@@ -36,6 +35,7 @@ class FlashcardLearnBackActivity : AppCompatActivity() {
         // Display flashcard answer
         binding.learnQuestionBack.text = flashcard.back
 
+        // If image is present, display it
         if (flashcard.image != Uri.EMPTY) {
             Picasso.get()
                 .load(flashcard.image)
@@ -44,6 +44,10 @@ class FlashcardLearnBackActivity : AppCompatActivity() {
             // if there is an image available, show it
             binding.imageViewFlashcardBack.visibility = View.VISIBLE
         }
+
+        /**
+         * Event handling for buttons easy, good and hard
+         */
 
         binding.btnEasy.setOnClickListener {
             flashcard.level = Level.EASY
