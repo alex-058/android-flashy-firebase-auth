@@ -1,7 +1,5 @@
 ## Welcome to Flashy
 
-This is my final assignment for the Android Programming with Kotlin course. 
-
 With the app Flashy efficient learning is available for everyone.
 
 Just add some flashcards and start your learning journey!
